@@ -61,6 +61,62 @@ function getStep(abs) {
   return STEPS[Math.min(abs, STEPS.length - 1)];
 }
 
+// ── Visualizer ────────────────────────────────────────────
+const VIZ_BELL = [1, 0.70, 0.45, 0.28, 0.16, 0.08];
+
+function bellH(abs) {
+  return VIZ_BELL[Math.min(abs, VIZ_BELL.length - 1)];
+}
+
+const vizEl    = document.getElementById('mcViz');
+const VIZ_BARS = [];
+if (vizEl) {
+  for (let i = 0; i < TRACKS.length; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'mc-viz-bar';
+    vizEl.appendChild(bar);
+    VIZ_BARS.push(bar);
+  }
+}
+
+function updateViz() {
+  VIZ_BARS.forEach((bar, i) => {
+    const abs = Math.abs(i - activeIdx);
+    bar.style.height = bellH(abs) * 100 + '%';
+    if (abs === 0) {
+      bar.style.background = 'var(--cyan)';
+      bar.style.opacity    = '1';
+      bar.style.boxShadow  = '0 0 8px var(--cyan)';
+    } else {
+      bar.style.background = 'var(--muted)';
+      bar.style.opacity    = '0.3';
+      bar.style.boxShadow  = 'none';
+    }
+  });
+}
+
+function startVizIdle() {
+  setInterval(() => {
+    const count      = 3 + Math.floor(Math.random() * 2);
+    const candidates = VIZ_BARS.map((_, i) => i).filter(i => i !== activeIdx);
+    // Partial Fisher-Yates shuffle to pick `count` random indices
+    for (let i = candidates.length - 1; i > candidates.length - 1 - count && i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    }
+    candidates.slice(candidates.length - count).forEach(i => {
+      const base  = bellH(Math.abs(i - activeIdx)) * 100;
+      const nudge = (Math.random() * 6 + 5) * (Math.random() < 0.5 ? 1 : -1);
+      VIZ_BARS[i].style.height = Math.max(4, Math.min(95, base + nudge)) + '%';
+      setTimeout(() => {
+        if (i !== activeIdx) {
+          VIZ_BARS[i].style.height = bellH(Math.abs(i - activeIdx)) * 100 + '%';
+        }
+      }, 150);
+    });
+  }, 200);
+}
+
 let activeIdx = 0;
 let isThrottled = false;
 
@@ -138,6 +194,8 @@ function goTo(index) {
   cardLeaveHandler = () => activeCardEl.removeEventListener('wheel', cardWheelHandler);
   activeCardEl.addEventListener('mouseenter', cardEnterHandler);
   activeCardEl.addEventListener('mouseleave', cardLeaveHandler);
+
+  updateViz();
 }
 
 // ── Mobile: lazy-load all iframes via IntersectionObserver
@@ -169,6 +227,9 @@ if (isMobile()) {
   initMobile();
 } else {
   goTo(0);
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    startVizIdle();
+  }
 }
 
 // ── Stage wheel — captures scroll on non-iframe card areas ─
