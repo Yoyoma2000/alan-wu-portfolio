@@ -20,12 +20,19 @@
   line-height: 1.05;
 }
 
+/* ── CLIP WRAPPER (overflow guard) ───────────────────── */
+.mc-clip {
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+}
+
 /* ── STAGE ────────────────────────────────────────────── */
 .mc-stage {
   position: relative;
-  height: 370px;
+  height: 520px;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   cursor: grab;
 }
 .mc-stage:active { cursor: grabbing; }
@@ -54,7 +61,7 @@
   opacity: 0;
   transition: opacity 0.3s;
 }
-.mc-card.mc-active { cursor: default; }
+.mc-card.mc-active { cursor: default; z-index: 10; }
 .mc-card.mc-active::before { opacity: 1; }
 .mc-card:not(.mc-active):hover { border-color: rgba(255,255,255,0.14); }
 
@@ -116,13 +123,6 @@
   color: var(--muted);
 }
 .mc-current { color: var(--cyan); }
-.mc-hint {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  opacity: 0.45;
-}
 
 /* ── MOBILE ───────────────────────────────────────────── */
 @media (max-width: 768px) {
@@ -130,11 +130,16 @@
 
   .mc-header { margin-bottom: 2rem; }
 
+  .mc-clip {
+    height: auto;
+    overflow: visible;
+    padding: 0 1.25rem;
+  }
+
   .mc-stage {
     height: auto;
     overflow: visible;
     cursor: default;
-    padding: 0 1.25rem;
     display: flex;
     flex-direction: column;
   }
