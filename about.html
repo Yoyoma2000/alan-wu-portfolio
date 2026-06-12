@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music — Alan Wu</title>
+  <title>About — Alan Wu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <style>
@@ -94,76 +94,76 @@
       margin-bottom: 3rem;
     }
 
-    /* ── PAGE HERO (spacious for music) ─────────────────── */
+    /* ── PAGE HERO ──────────────────────────────────────── */
     .page-hero {
-      padding: 11rem 3rem 7rem;
-      background: var(--bg2);
+      padding: 9rem 3rem 4rem;
       position: relative;
       z-index: 1;
     }
     .page-hero .section-title { margin-bottom: 0; }
-    .page-hero-sub {
-      margin-top: 1.25rem;
-      font-size: 1rem;
-      color: var(--muted);
-      font-family: var(--font-body);
-    }
-    .page-hero-sub span { color: var(--text); }
 
-    /* ── MUSIC ──────────────────────────────────────────── */
-    #music { background: var(--bg2); padding-top: 3rem; }
-    .music-grid {
+    /* ── ABOUT ──────────────────────────────────────────── */
+    #about {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      padding-top: 3rem;
+    }
+    .about-left {}
+    .about-text {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 520px;
+    }
+    .about-text strong { color: var(--text); }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
       gap: 1px;
       background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
     }
-    .music-card {
+    .stat-cell {
       background: var(--bg2);
-      padding: 1.75rem;
-      display: flex; flex-direction: column; gap: 1rem;
-      transition: background 0.2s;
-      cursor: pointer;
+      padding: 1.5rem;
     }
-    .music-card:hover { background: var(--surface); }
-    .music-waveform {
-      height: 48px;
-      display: flex; align-items: center; gap: 2px;
-    }
-    .wf-bar {
-      flex: 1;
-      background: linear-gradient(180deg, var(--cyan), var(--violet));
-      border-radius: 1px;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-    .music-card:hover .wf-bar { opacity: 1; }
-    .music-title {
+    .stat-num {
       font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .music-genre {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+      font-size: 2.5rem;
+      font-weight: 800;
       color: var(--cyan);
-      text-transform: uppercase;
     }
-    .music-meta {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .music-placeholder {
-      grid-column: 1 / -1;
-      padding: 3rem;
-      text-align: center;
+    .stat-label {
+      font-size: 0.75rem;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
       color: var(--muted);
-      border: 1px dashed var(--border);
-      background: var(--bg2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
     }
+    .about-right {}
+    .skills-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .skill-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--violet);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--cyan); color: var(--cyan); }
 
     /* ── FOOTER ─────────────────────────────────────────── */
     footer {
@@ -191,7 +191,8 @@
       nav { padding: 1rem 1.25rem; }
       .nav-links { gap: 1.25rem; }
       section { padding: 5rem 1.25rem; }
-      .page-hero { padding: 8rem 1.25rem 5rem; }
+      .page-hero { padding: 7rem 1.25rem 3rem; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -217,34 +218,94 @@
   <main>
     <!-- PAGE HERO -->
     <div class="page-hero">
-      <p class="section-label reveal">Music</p>
-      <h1 class="section-title reveal">Sounds I've<br/>made.</h1>
-      <p class="page-hero-sub reveal">
-        <span>Cinematic · EDM · Pop · Rock</span> — piano and saxophone, produced in the box.
-      </p>
+      <p class="section-label reveal">About</p>
+      <h1 class="section-title reveal">Two worlds,<br/>one toolkit.</h1>
     </div>
 
-    <!-- MUSIC -->
-    <section id="music">
-      <div class="music-grid" id="musicGrid">
-        <!-- Placeholder cards — replace with real tracks -->
-        <div class="music-card reveal" id="placeholder-1">
-          <div class="music-genre">Cinematic</div>
-          <div class="music-waveform" id="wf1"></div>
-          <div class="music-title">Track Title</div>
-          <div class="music-meta">MP3 · Add your file to /assets/music/</div>
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="about-left">
+        <p class="about-text reveal">
+          I'm a <strong>4th-year CS student at UBC</strong> with a 4.30 GPA, building full-stack
+          web apps, AI-powered tools, and interactive 3D experiences. I've shipped production
+          features at a Vancouver AI startup and contributed end-to-end to a nonprofit booking
+          system serving real users.
+        </p>
+        <p class="about-text reveal" style="margin-top:1rem;">
+          Outside of code, I produce music across <strong>cinematic, EDM, pop, and rock</strong> —
+          and I play piano and saxophone. Both worlds reward the same thing: systems thinking
+          and an ear for what feels right.
+        </p>
+
+        <div class="about-stats reveal">
+          <div class="stat-cell">
+            <div class="stat-num">4.30</div>
+            <div class="stat-label">GPA / 4.33</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">2×</div>
+            <div class="stat-label">Co-op Terms</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">2nd</div>
+            <div class="stat-label">Hellohacks 2024</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">BPM & commits</div>
+          </div>
         </div>
-        <div class="music-card reveal" id="placeholder-2">
-          <div class="music-genre">EDM</div>
-          <div class="music-waveform" id="wf2"></div>
-          <div class="music-title">Track Title</div>
-          <div class="music-meta">MP3 · Add your file to /assets/music/</div>
-        </div>
-        <div class="music-card reveal" id="placeholder-3">
-          <div class="music-genre">Pop / Rock</div>
-          <div class="music-waveform" id="wf3"></div>
-          <div class="music-title">Track Title</div>
-          <div class="music-meta">MP3 · Add your file to /assets/music/</div>
+      </div>
+
+      <div class="about-right">
+        <p class="section-label reveal">Skills</p>
+        <div class="skills-grid reveal">
+          <div>
+            <div class="skill-group-label">Languages</div>
+            <div class="skill-tags">
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">HTML/CSS</span>
+              <span class="skill-tag">R</span>
+            </div>
+          </div>
+          <div>
+            <div class="skill-group-label">Frameworks</div>
+            <div class="skill-tags">
+              <span class="skill-tag">React.js</span>
+              <span class="skill-tag">Next.js</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Django</span>
+              <span class="skill-tag">Three.js</span>
+              <span class="skill-tag">Tailwind CSS</span>
+              <span class="skill-tag">PostgreSQL</span>
+            </div>
+          </div>
+          <div>
+            <div class="skill-group-label">Tools & AI</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Claude API</span>
+              <span class="skill-tag">Claude Code</span>
+              <span class="skill-tag">Firebase</span>
+              <span class="skill-tag">REST APIs</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">JIRA</span>
+            </div>
+          </div>
+          <div>
+            <div class="skill-group-label">Music</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Production</span>
+              <span class="skill-tag">Piano</span>
+              <span class="skill-tag">Saxophone</span>
+              <span class="skill-tag">Cinematic</span>
+              <span class="skill-tag">EDM</span>
+              <span class="skill-tag">Pop / Rock</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -265,18 +326,6 @@
       });
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
-
-    // ── Music waveform bars (random decorative) ───────────
-    ['wf1','wf2','wf3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      for (let i = 0; i < 40; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'wf-bar';
-        bar.style.height = (15 + Math.random() * 80) + '%';
-        el.appendChild(bar);
-      }
-    });
 
     // ── Active nav highlight ──────────────────────────────
     const page = window.location.pathname.split('/').pop() || 'index.html';

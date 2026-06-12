@@ -55,10 +55,12 @@
 
 ```
 alan-wu-portfolio/
-├── index.html              ← Hero + About + Contact (home page)
+├── index.html              ← Pure landing page: full-viewport hero + 4-card teaser strip
+├── about.html              ← About section: bio, stats grid, skills grid
 ├── experience.html         ← Experience section (full page)
 ├── projects.html           ← Projects section with CS/Music Tech tabs (full page)
 ├── music.html              ← Music section (full page)
+├── contact.html            ← Contact section (full page, vertically centered)
 ├── CLAUDE.md               ← you are here
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
@@ -82,11 +84,13 @@ alan-wu-portfolio/
 ```
 
 **Multi-page notes:**
-- Each HTML file is fully self-contained (full `<style>` block copied into every page — no shared CSS file yet).
+- Each HTML file is fully self-contained (full `<style>` block in every page — no shared CSS file yet).
 - Nav logo (`AW.DEV`) links to `index.html` on all pages.
-- Active nav link is highlighted via an inline `<script>` checking `window.location.pathname` on each page.
-- Inner pages (`experience.html`, `projects.html`, `music.html`) have a `.page-hero` div at top (section label + heading) in place of the old in-section headings.
-- `music.html` uses extra padding on `.page-hero` to give breathing room while tracks are placeholders.
+- Active nav link is highlighted in `var(--cyan)` via inline `<script>` checking `window.location.pathname` on each page.
+- `index.html` is a pure landing page: full-viewport hero + a single teaser strip (4 `.teaser-card` elements linking to each inner page). No full content sections.
+- Inner pages (`about.html`, `experience.html`, `projects.html`, `music.html`, `contact.html`) each have a `.page-hero` div at top (section label + heading).
+- `music.html` uses extra padding on `.page-hero` for breathing room while tracks are placeholders.
+- **Sticky footer:** all pages use `body { display: flex; flex-direction: column; min-height: 100vh; }` and `<main>` with `flex: 1` to push the footer to the bottom of the viewport.
 
 ---
 

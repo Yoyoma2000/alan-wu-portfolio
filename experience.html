@@ -33,9 +33,13 @@
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+    main { flex: 1; }
 
     /* ── NOISE TEXTURE OVERLAY ──────────────────────────── */
     body::before {
@@ -206,73 +210,75 @@
   <nav>
     <a href="index.html" class="nav-logo">AW.DEV</a>
     <div class="nav-links">
-      <a href="index.html#about">About</a>
+      <a href="about.html">About</a>
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
       <a href="music.html">Music</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <!-- PAGE HERO -->
-  <div class="page-hero">
-    <p class="section-label reveal">Experience</p>
-    <h1 class="section-title reveal">Where I've<br/>shipped.</h1>
-  </div>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="exp-list">
-
-      <div class="exp-item reveal">
-        <div class="exp-meta">
-          <div class="exp-date">Jan – Apr 2026</div>
-          <div class="exp-company">Surrey Food Bank</div>
-          <div class="exp-location">Surrey, BC</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Full Stack Developer</div>
-          <div class="exp-tech">
-            <span class="tech-tag">React.js</span>
-            <span class="tech-tag">Django</span>
-            <span class="tech-tag">PostgreSQL</span>
-            <span class="tech-tag">Tailwind</span>
-            <span class="tech-tag">JIRA</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Architected a full-stack appointment booking system with automated timeslot generation from admin-defined windows, supporting 15 and 30-minute durations.</li>
-            <li>Built a client intake questionnaire system with a dedicated REST endpoint, gating booking access behind completion checks enforced on both frontend and backend.</li>
-            <li>Independently designed the Tiny Bundles feature end-to-end — pregnancy-specific Wednesday booking slots integrated into the existing questionnaire flow.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-meta">
-          <div class="exp-date">May – Sep 2025</div>
-          <div class="exp-company">ZenNyxAI Inc.</div>
-          <div class="exp-location">Vancouver, BC</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Web Feature Engineer</div>
-          <div class="exp-tech">
-            <span class="tech-tag">React.js</span>
-            <span class="tech-tag">React-Konva</span>
-            <span class="tech-tag">Marked.js</span>
-            <span class="tech-tag">jsPDF</span>
-            <span class="tech-tag">KaTeX</span>
-            <span class="tech-tag">OpenAI</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Designed and delivered a core MindMap feature for EasyNoteAI — converting AI-generated Markdown into interactive, editable node-graph visualizations via React-Konva.</li>
-            <li>Engineered a Markdown parsing pipeline with Marked.js and KaTeX, enabling real-time node add, delete, modify, and undo operations on dynamic tree graphs.</li>
-            <li>Implemented multi-format export (PNG, SVG, PDF) via jsPDF and react-konva-to-svg, addressing top user pain points from competitor analysis.</li>
-          </ul>
-        </div>
-      </div>
-
+  <main>
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <p class="section-label reveal">Experience</p>
+      <h1 class="section-title reveal">Where I've<br/>shipped.</h1>
     </div>
-  </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="exp-list">
+
+        <div class="exp-item reveal">
+          <div class="exp-meta">
+            <div class="exp-date">Jan – Apr 2026</div>
+            <div class="exp-company">Surrey Food Bank</div>
+            <div class="exp-location">Surrey, BC</div>
+          </div>
+          <div class="exp-content">
+            <div class="exp-role">Full Stack Developer</div>
+            <div class="exp-tech">
+              <span class="tech-tag">React.js</span>
+              <span class="tech-tag">Django</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">Tailwind</span>
+              <span class="tech-tag">JIRA</span>
+            </div>
+            <ul class="exp-bullets">
+              <li>Architected a full-stack appointment booking system with automated timeslot generation from admin-defined windows, supporting 15 and 30-minute durations.</li>
+              <li>Built a client intake questionnaire system with a dedicated REST endpoint, gating booking access behind completion checks enforced on both frontend and backend.</li>
+              <li>Independently designed the Tiny Bundles feature end-to-end — pregnancy-specific Wednesday booking slots integrated into the existing questionnaire flow.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item reveal">
+          <div class="exp-meta">
+            <div class="exp-date">May – Sep 2025</div>
+            <div class="exp-company">ZenNyxAI Inc.</div>
+            <div class="exp-location">Vancouver, BC</div>
+          </div>
+          <div class="exp-content">
+            <div class="exp-role">Web Feature Engineer</div>
+            <div class="exp-tech">
+              <span class="tech-tag">React.js</span>
+              <span class="tech-tag">React-Konva</span>
+              <span class="tech-tag">Marked.js</span>
+              <span class="tech-tag">jsPDF</span>
+              <span class="tech-tag">KaTeX</span>
+              <span class="tech-tag">OpenAI</span>
+            </div>
+            <ul class="exp-bullets">
+              <li>Designed and delivered a core MindMap feature for EasyNoteAI — converting AI-generated Markdown into interactive, editable node-graph visualizations via React-Konva.</li>
+              <li>Engineered a Markdown parsing pipeline with Marked.js and KaTeX, enabling real-time node add, delete, modify, and undo operations on dynamic tree graphs.</li>
+              <li>Implemented multi-format export (PNG, SVG, PDF) via jsPDF and react-konva-to-svg, addressing top user pain points from competitor analysis.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
 
   <footer>
     <span>© 2026 Alan Wu</span>

@@ -33,9 +33,13 @@
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+    main { flex: 1; }
 
     /* ── NOISE TEXTURE OVERLAY ──────────────────────────── */
     body::before {
@@ -245,105 +249,107 @@
   <nav>
     <a href="index.html" class="nav-logo">AW.DEV</a>
     <div class="nav-links">
-      <a href="index.html#about">About</a>
+      <a href="about.html">About</a>
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
       <a href="music.html">Music</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <!-- PAGE HERO -->
-  <div class="page-hero">
-    <p class="section-label reveal">Projects</p>
-    <h1 class="section-title reveal">What I've<br/>built.</h1>
-  </div>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="projects-tabs">
-      <button class="tab-btn active" data-tab="cs">CS &amp; Engineering</button>
-      <button class="tab-btn" data-tab="music-tech">Music Tech</button>
+  <main>
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <p class="section-label reveal">Projects</p>
+      <h1 class="section-title reveal">What I've<br/>built.</h1>
     </div>
 
-    <div class="tab-panel active" id="tab-cs">
-      <div class="projects-grid">
-
-        <div class="project-card reveal">
-          <div class="project-type">Personal · 2025</div>
-          <div class="project-name">39WithYou</div>
-          <p class="project-desc">AI-powered chatbot with an animated 3D character model. LLM inference backend with locally run TTS models for real-time voice interaction, synchronized to dynamic gesture mapping.</p>
-          <div class="project-stack">
-            <span>TypeScript</span><span>React.js</span><span>Three.js</span>
-            <span>Node.js</span><span>Claude API</span><span>TTS Models</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Hackathon · Oct 2024 · 🏆 2nd Place</div>
-          <div class="project-name">VoiceBase</div>
-          <p class="project-desc">Full-stack tool for generating custom voicebanks for voice synthesis, built in a team of 4 at UBC Biztech Hellohacks. Led frontend with voice recording, document management, and ZIP downloads.</p>
-          <div class="project-stack">
-            <span>React.js</span><span>Spring Boot</span><span>Node.js</span>
-            <span>Tailwind</span><span>jszip</span><span>react-mic</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Personal · 2024</div>
-          <div class="project-name">FiscordProject</div>
-          <p class="project-desc">Real-time messaging platform with live friend-list based DMs, animated web components, and seamless routing. Google + email authentication with Firebase as the live database.</p>
-          <div class="project-stack">
-            <span>TypeScript</span><span>Next.js</span><span>Firebase</span>
-            <span>Tailwind</span><span>NoSQL</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Academic · 2024</div>
-          <div class="project-name">WhereToEat?</div>
-          <p class="project-desc">Restaurant database app in Java with search, order, and recommendation functions. Developed 9 user stories for TDD; achieved 100% JUnit test coverage.</p>
-          <div class="project-stack">
-            <span>Java</span><span>Swing</span><span>JUnit</span>
-            <span>JSON</span><span>IntelliJ</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Academic · 2024</div>
-          <div class="project-name">Tennis Rank Predictor</div>
-          <p class="project-desc">Linear regression model in R to predict a player's best ATP ranking using ELO rating and current rank. Achieved RMSPE of 24 using tidyverse, tidyModels, and GGAlly for data wrangling and visualization.</p>
-          <div class="project-stack">
-            <span>R</span><span>tidyverse</span><span>tidyModels</span><span>GGAlly</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="projects-tabs">
+        <button class="tab-btn active" data-tab="cs">CS &amp; Engineering</button>
+        <button class="tab-btn" data-tab="music-tech">Music Tech</button>
       </div>
-    </div>
 
-    <div class="tab-panel" id="tab-music-tech">
-      <div class="projects-grid">
-        <div class="music-placeholder">
-          🎛️ Music tech projects coming soon — drop your files and Claude Code will scaffold the cards automatically.
+      <div class="tab-panel active" id="tab-cs">
+        <div class="projects-grid">
+
+          <div class="project-card reveal">
+            <div class="project-type">Personal · 2025</div>
+            <div class="project-name">39WithYou</div>
+            <p class="project-desc">AI-powered chatbot with an animated 3D character model. LLM inference backend with locally run TTS models for real-time voice interaction, synchronized to dynamic gesture mapping.</p>
+            <div class="project-stack">
+              <span>TypeScript</span><span>React.js</span><span>Three.js</span>
+              <span>Node.js</span><span>Claude API</span><span>TTS Models</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
+            </div>
+          </div>
+
+          <div class="project-card reveal">
+            <div class="project-type">Hackathon · Oct 2024 · 🏆 2nd Place</div>
+            <div class="project-name">VoiceBase</div>
+            <p class="project-desc">Full-stack tool for generating custom voicebanks for voice synthesis, built in a team of 4 at UBC Biztech Hellohacks. Led frontend with voice recording, document management, and ZIP downloads.</p>
+            <div class="project-stack">
+              <span>React.js</span><span>Spring Boot</span><span>Node.js</span>
+              <span>Tailwind</span><span>jszip</span><span>react-mic</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
+            </div>
+          </div>
+
+          <div class="project-card reveal">
+            <div class="project-type">Personal · 2024</div>
+            <div class="project-name">FiscordProject</div>
+            <p class="project-desc">Real-time messaging platform with live friend-list based DMs, animated web components, and seamless routing. Google + email authentication with Firebase as the live database.</p>
+            <div class="project-stack">
+              <span>TypeScript</span><span>Next.js</span><span>Firebase</span>
+              <span>Tailwind</span><span>NoSQL</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
+            </div>
+          </div>
+
+          <div class="project-card reveal">
+            <div class="project-type">Academic · 2024</div>
+            <div class="project-name">WhereToEat?</div>
+            <p class="project-desc">Restaurant database app in Java with search, order, and recommendation functions. Developed 9 user stories for TDD; achieved 100% JUnit test coverage.</p>
+            <div class="project-stack">
+              <span>Java</span><span>Swing</span><span>JUnit</span>
+              <span>JSON</span><span>IntelliJ</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
+            </div>
+          </div>
+
+          <div class="project-card reveal">
+            <div class="project-type">Academic · 2024</div>
+            <div class="project-name">Tennis Rank Predictor</div>
+            <p class="project-desc">Linear regression model in R to predict a player's best ATP ranking using ELO rating and current rank. Achieved RMSPE of 24 using tidyverse, tidyModels, and GGAlly for data wrangling and visualization.</p>
+            <div class="project-stack">
+              <span>R</span><span>tidyverse</span><span>tidyModels</span><span>GGAlly</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
-  </section>
+
+      <div class="tab-panel" id="tab-music-tech">
+        <div class="projects-grid">
+          <div class="music-placeholder">
+            🎛️ Music tech projects coming soon — drop your files and Claude Code will scaffold the cards automatically.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <span>© 2026 Alan Wu</span>
