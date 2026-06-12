@@ -1,7 +1,13 @@
 /* ── SECTION ──────────────────────────────────────────── */
+/* Make main stretch to fill body flex space, then #music fills main */
+body:has(#music) main {
+  display: flex;
+  flex-direction: column;
+}
+
 #music {
   background: var(--bg2);
-  min-height: calc(100vh - 60px - 3rem);
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
