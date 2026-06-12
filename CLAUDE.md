@@ -65,7 +65,7 @@ alan-wu-portfolio/
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
 │   ├── js/                 ← extracted scripts
-│   │   ├── main.js         ← scroll reveal + active nav highlight (shared)
+│   │   ├── main.js         ← scroll reveal + active nav highlight + hamburger menu (shared)
 │   │   ├── index.js        ← waveform canvas animation
 │   │   ├── projects.js     ← tab switcher
 │   │   └── music.js        ← decorative waveform bar generator
@@ -97,13 +97,16 @@ alan-wu-portfolio/
 ```
 
 **Multi-page notes:**
-- Each HTML file is fully self-contained (full `<style>` block in every page — no shared CSS file yet).
+- Styles live in `assets/css/` — `main.css` is shared by all pages; each page also links its own `[pagename].css`. No inline `<style>` blocks.
 - Nav logo (`AW.DEV`) links to `index.html` on all pages.
-- Active nav link is highlighted in `var(--cyan)` via inline `<script>` checking `window.location.pathname` on each page.
+- Active nav link is highlighted in `var(--cyan)` via JS in `main.js` checking `window.location.pathname`.
+- **Mobile nav:** all 6 pages have a `.nav-hamburger` button inside `<nav>`. `main.js` builds a `.nav-mobile-overlay` div appended to `<body>` (not inside `<nav>`) to avoid the `backdrop-filter` containing-block issue, clones the nav links into it, and toggles it on hamburger click. Overlay is `position: fixed; inset: 0; z-index: 99` with `background: var(--bg)`.
 - `index.html` is a pure landing page: full-viewport hero + a single teaser strip (4 `.teaser-card` elements linking to each inner page). No full content sections.
 - Inner pages (`about.html`, `experience.html`, `projects.html`, `music.html`, `contact.html`) each have a `.page-hero` div at top (section label + heading).
 - `music.html` uses extra padding on `.page-hero` for breathing room while tracks are placeholders.
 - **Sticky footer:** all pages use `body { display: flex; flex-direction: column; min-height: 100vh; }` and `<main>` with `flex: 1` to push the footer to the bottom of the viewport.
+- **Hero animation:** `.hero-eyebrow`, `.hero-name`, `.hero-tagline`, `.hero-cta`, `.scroll-hint` start at `opacity: 0; transform: translateY(20px)` with a CSS `transition`. `index.js` triggers each via `setTimeout` at staggered delays (300–1400 ms). Do NOT use CSS `@keyframes` or `animation:` for these — the JS setTimeout approach is intentional (CSS animation fill-mode proved unreliable on GitHub Pages / Windows with reduce-motion OS settings).
+- **prefers-reduced-motion:** `main.css` has a `@media (prefers-reduced-motion: reduce)` block that sets `transition: none !important` globally and forces `opacity: 1` on both `.reveal` and all hero elements as a CSS fallback. `index.js` also checks `window.matchMedia` and skips timeouts to reveal hero elements immediately.
 
 ---
 
@@ -153,7 +156,7 @@ Files: MP3 / MP4 in `/assets/music/`
 3. **No frameworks.** Do not introduce React, Vite, or any bundler without an explicit instruction to do so.
 4. **GitHub Pages compatibility.** Everything must work as static files — no server-side code, no Node process.
 5. **Music files are local assets.** Reference them as `./assets/music/filename.mp3` — never embed external streaming URLs without asking.
-6. **Reveal animation class is `.reveal`.** Add it to any new section heading or card. The IntersectionObserver handles the rest.
+6. **Reveal animation class is `.reveal`.** Add it to any new section heading or card. The IntersectionObserver in `main.js` toggles `.visible` (which sets `opacity: 1; transform: none` via CSS) when the element enters the viewport.
 7. **Waveform canvas (`#waveCanvas`) lives in `#hero` only.** Do not duplicate it.
 8. **Project cards** follow the `.project-card` structure exactly — type, name, desc, stack tags, links.
 9. **Music cards** follow the `.music-card` structure — genre, waveform div `#wfN`, title, meta.

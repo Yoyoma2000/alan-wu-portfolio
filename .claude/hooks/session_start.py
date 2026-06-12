@@ -13,9 +13,9 @@ import os
 from pathlib import Path
 
 def count_projects():
-    """Count project cards in index.html as a rough metric."""
+    """Count project cards in projects.html."""
     try:
-        html = Path("index.html").read_text()
+        html = Path("projects.html").read_text()
         return html.count('class="project-card')
     except Exception:
         return "?"
