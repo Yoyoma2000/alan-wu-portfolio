@@ -65,13 +65,20 @@ function positionIndicator() {
     indicator.style.opacity = '1';
   }
 }
-// Double-rAF ensures layout (including font metrics) is stable before measuring
-// link dimensions — same pattern used internally for the cross-page slide.
-requestAnimationFrame(() => {
+// Two cases:
+// 1. Cross-page navigation (prevLeft in sessionStorage): fonts are cached, use
+//    double-rAF so the snap-then-slide animation runs without a fonts.ready race.
+// 2. Fresh page load (no prevLeft): fonts may not be loaded yet, so wait for
+//    fonts.ready before measuring — no animation in flight, so no race risk.
+if (sessionStorage.getItem('navPrevLeft')) {
   requestAnimationFrame(() => {
-    positionIndicator();
+    requestAnimationFrame(() => {
+      positionIndicator();
+    });
   });
-});
+} else {
+  document.fonts.ready.then(() => positionIndicator());
+}
 
 // Save position before navigating so the next page can slide from here
 function saveIndicatorPos() {
