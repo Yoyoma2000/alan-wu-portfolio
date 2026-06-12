@@ -157,12 +157,6 @@ body:has(#music) main {
 }
 .mc-current { color: var(--cyan); }
 
-#music ~ footer,
-body:has(#music) footer {
-  margin-top: auto;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
 
 /* ── MOBILE ───────────────────────────────────────────── */
 @media (max-width: 768px) {
