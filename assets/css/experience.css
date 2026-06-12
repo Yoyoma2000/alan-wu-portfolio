@@ -1,6 +1,5 @@
 /* ── PAGE HERO OVERRIDE ─────────────────────────────── */
 .page-hero { background: var(--bg2); }
-.exp-resume-btn { display: inline-block; margin-top: 1.75rem; }
 
 /* ── EXPERIENCE SECTION ──────────────────────────────── */
 #experience { background: var(--bg2); padding-top: 1rem; }

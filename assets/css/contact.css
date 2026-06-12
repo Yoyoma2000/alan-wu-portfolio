@@ -54,6 +54,7 @@
   transition: border-color 0.2s, color 0.2s;
 }
 .contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
+.contact-resume-btn { margin-top: 2rem; }
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 768px) {
