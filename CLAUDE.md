@@ -98,8 +98,6 @@ alan-wu-portfolio/
    - React.js, React-Konva, Marked.js, jsPDF, KaTeX, OpenAI
    - Core MindMap feature for EasyNoteAI (Markdown → interactive node graphs)
 
-3. **Royal Canadian Air Cadets** — Flight Sergeant, 759 Falcon Squadron, Dec 2018–May 2023
-
 ### Projects
 | Name | Type | Year | Stack | GitHub |
 |------|------|------|-------|--------|
