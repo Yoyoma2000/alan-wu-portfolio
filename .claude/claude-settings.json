@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/propose_claude_md.py"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Create",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/session_start.py"
+          }
+        ]
+      }
+    ]
+  }
+}
