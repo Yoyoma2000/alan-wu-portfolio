@@ -54,6 +54,8 @@
   transition: border-color 0.2s, color 0.2s;
 }
 .contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
+.contact-email-btn { background: none; cursor: pointer; }
+.contact-email-btn.copied { border-color: var(--cyan); color: var(--cyan); }
 .contact-resume-btn { margin-top: 2rem; }
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
