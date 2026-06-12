@@ -151,12 +151,11 @@
 }
 .mc-current { color: var(--cyan); }
 
-/* Tighten site footer gap on music page */
 #music ~ footer,
 body:has(#music) footer {
-  margin-top: 0;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 /* ── MOBILE ───────────────────────────────────────────── */
