@@ -15,14 +15,14 @@ let activeNavLink = null;
 
 document.querySelectorAll('.nav-links a').forEach(a => {
   if (a.getAttribute('href') === page) {
-    a.style.color = 'var(--bg)';
+    a.style.color = 'var(--text)';
     activeNavLink = a;
   }
 });
 
 // On the landing page treat the logo as the active element
 if (!activeNavLink && (page === 'index.html' || page === '') && logoEl) {
-  logoEl.style.color = 'var(--bg)';
+  logoEl.style.color = 'var(--text)';
   activeNavLink = logoEl;
 }
 
@@ -90,7 +90,7 @@ if (hamburger && navLinksEl) {
   overlay.className = 'nav-mobile-overlay';
   navLinksEl.querySelectorAll('a').forEach(a => {
     const link = a.cloneNode(true);
-    if (a.getAttribute('href') === page) link.style.color = 'var(--bg)';
+    if (a.getAttribute('href') === page) link.style.color = 'var(--text)';
     overlay.appendChild(link);
   });
   document.body.appendChild(overlay);
