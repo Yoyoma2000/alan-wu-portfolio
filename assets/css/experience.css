@@ -1,59 +1,139 @@
 /* ── PAGE HERO OVERRIDE ─────────────────────────────── */
 .page-hero { background: var(--bg2); }
+.exp-resume-btn { display: inline-block; margin-top: 1.75rem; }
 
-/* ── EXPERIENCE ─────────────────────────────────────── */
-#experience { background: var(--bg2); padding-top: 3rem; }
-.exp-list { display: flex; flex-direction: column; }
-.exp-item {
+/* ── EXPERIENCE SECTION ──────────────────────────────── */
+#experience { background: var(--bg2); padding-top: 1rem; }
+
+/* ── TIMELINE CONTAINER ──────────────────────────────── */
+.timeline {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 0 5rem;
+}
+
+/* Gradient center line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--cyan), var(--violet));
+  transform: translateX(-50%);
+}
+
+/* ── TIMELINE ENTRY ──────────────────────────────────── */
+.tl-entry {
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 3rem;
-  padding: 2.5rem 0;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.2s;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 0 1.5rem;
+  align-items: center;
+  margin-bottom: 3.5rem;
 }
-.exp-item:first-child { border-top: 1px solid var(--border); }
-.exp-meta { padding-top: 0.2rem; }
-.exp-date {
+.tl-entry:last-child { margin-bottom: 0; }
+
+/* Left layout: [date] [node] [card] */
+.tl-left .tl-date  { grid-column: 1; text-align: right; }
+.tl-left .tl-node  { grid-column: 2; }
+.tl-left .tl-card  { grid-column: 3; }
+
+/* Right layout: [card] [node] [date] */
+.tl-right .tl-card { grid-column: 1; }
+.tl-right .tl-node { grid-column: 2; }
+.tl-right .tl-date { grid-column: 3; text-align: left; }
+
+/* ── NODE DOT ────────────────────────────────────────── */
+.tl-node {
+  width: 14px;
+  height: 14px;
+  background: var(--cyan);
+  border-radius: 50%;
+  border: 2px solid var(--bg2);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.25);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.tl-node--academic {
+  background: var(--violet);
+  box-shadow: 0 0 8px rgba(155, 92, 246, 0.7), 0 0 20px rgba(155, 92, 246, 0.25);
+}
+
+/* ── DATE LABEL ──────────────────────────────────────── */
+.tl-date {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--muted);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4;
 }
+
+/* ── CARD ────────────────────────────────────────────── */
+.tl-card {
+  background: var(--surface);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.tl-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tl-card:hover::before { opacity: 1; }
+
+/* ── CARD CONTENTS ───────────────────────────────────── */
+.exp-role {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--cyan);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.exp-role--academic { color: var(--violet); }
+
 .exp-company {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-top: 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
 }
-.exp-location {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-top: 0.1rem;
-}
-.exp-role {
-  font-size: 0.8rem;
-  font-family: var(--font-mono);
-  color: var(--cyan);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
+
+/* Shown only on mobile (date inside card) */
+.card-date { display: none; }
+
 .exp-tech {
   display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 .tech-tag {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   padding: 0.2rem 0.6rem;
-  background: rgba(0,229,255,0.07);
-  border: 1px solid rgba(0,229,255,0.2);
+  background: rgba(0, 229, 255, 0.07);
+  border: 1px solid rgba(0, 229, 255, 0.2);
   color: var(--cyan);
 }
-.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.tech-tag--academic {
+  background: rgba(155, 92, 246, 0.07);
+  border-color: rgba(155, 92, 246, 0.2);
+  color: var(--violet);
+}
+
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
 .exp-bullets li {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--muted);
   padding-left: 1.25rem;
   position: relative;
@@ -65,7 +145,40 @@
   color: var(--violet);
 }
 
-/* ── RESPONSIVE ─────────────────────────────────────── */
+/* ── MOBILE ──────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  /* Line runs down the left edge */
+  .timeline::before {
+    left: 16px;
+    transform: none;
+  }
+
+  /* Collapse to 2-col: [node] [card] */
+  .tl-entry {
+    grid-template-columns: 32px 1fr;
+    gap: 0 1rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  /* All nodes in col 1, all cards in col 2 */
+  .tl-left .tl-node,
+  .tl-right .tl-node { grid-column: 1; grid-row: 1; margin-top: 0.35rem; }
+
+  .tl-left .tl-card,
+  .tl-right .tl-card { grid-column: 2; grid-row: 1; }
+
+  /* Hide side dates; show inline date inside card */
+  .tl-left .tl-date,
+  .tl-right .tl-date { display: none; }
+
+  .card-date {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
 }
