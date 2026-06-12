@@ -35,3 +35,26 @@ function drawWave() {
   requestAnimationFrame(drawWave);
 }
 drawWave();
+
+// ── Hero animation trigger ────────────────────────────
+const heroItems = [
+  ['.hero-eyebrow', 300],
+  ['.hero-name',    500],
+  ['.hero-tagline', 700],
+  ['.hero-cta',     900],
+  ['.scroll-hint', 1400],
+];
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+heroItems.forEach(([sel, delay]) => {
+  const el = document.querySelector(sel);
+  if (!el) return;
+  if (prefersReduced) {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  } else {
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, delay);
+  }
+});
