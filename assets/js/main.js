@@ -80,6 +80,14 @@ if (sessionStorage.getItem('navPrevLeft')) {
   document.fonts.ready.then(() => positionIndicator());
 }
 
+// Reposition instantly on resize (covers moving between monitors with different DPI).
+// Clears any lingering slide transition so the pill snaps rather than animates.
+window.addEventListener('resize', () => {
+  const indicator = document.querySelector('.nav-indicator');
+  if (indicator) indicator.style.transition = 'none';
+  positionIndicator();
+});
+
 // Save position before navigating so the next page can slide from here
 function saveIndicatorPos() {
   const ind = document.querySelector('.nav-indicator');
