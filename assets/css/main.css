@@ -77,11 +77,9 @@ nav {
 
 .nav-indicator {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 1.85rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  top: -1.25rem;
+  bottom: -1.25rem;
+  background: rgba(255, 255, 255, 0.07);
   pointer-events: none;
   opacity: 0;
   z-index: 0;
