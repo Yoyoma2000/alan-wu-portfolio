@@ -64,6 +64,14 @@ alan-wu-portfolio/
 ├── CLAUDE.md               ← you are here
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
+│   ├── css/                ← extracted stylesheets
+│   │   ├── main.css        ← tokens, reset, nav, footer, animations, .page-hero base (shared)
+│   │   ├── index.css       ← hero, waveform, glow orbs, buttons, teaser strip
+│   │   ├── about.css       ← about grid, stats, skills
+│   │   ├── experience.css  ← experience list + page-hero bg override
+│   │   ├── projects.css    ← tabs, project cards, tab panels
+│   │   ├── music.css       ← music grid, cards, page-hero override (spacious)
+│   │   └── contact.css     ← contact section (centered layout, watermark)
 │   ├── music/              ← .mp3 / .mp4 files go here
 │   │   └── README.md       ← format: slug.mp3, metadata in music-data.js
 │   ├── images/             ← project screenshots, profile photo
@@ -136,7 +144,7 @@ Files: MP3 / MP4 in `/assets/music/`
 ## Critical Rules for Claude Code
 
 1. **Never change design tokens.** Colors, fonts, and spacing are locked.
-2. **Multi-page, self-contained files** — the site is split across `index.html`, `experience.html`, `projects.html`, and `music.html`. Keep all styles/scripts inline in each file (no shared CSS/JS files yet). When adding content, edit the relevant page file.
+2. **Multi-page with shared CSS** — the site is split across 6 HTML files. Styles live in `assets/css/`: `main.css` is shared by all pages; each page also links its own `[pagename].css` for unique styles. When adding a new component, decide if it's shared (→ `main.css`) or page-specific (→ the relevant `[pagename].css`). Do not add inline `<style>` blocks.
 3. **No frameworks.** Do not introduce React, Vite, or any bundler without an explicit instruction to do so.
 4. **GitHub Pages compatibility.** Everything must work as static files — no server-side code, no Node process.
 5. **Music files are local assets.** Reference them as `./assets/music/filename.mp3` — never embed external streaming URLs without asking.

@@ -1,0 +1,173 @@
+/* ── HERO ───────────────────────────────────────────── */
+#hero {
+  position: relative;
+  height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 0 3rem;
+  overflow: hidden;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s forwards;
+}
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--text) 30%, var(--cyan) 70%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s forwards;
+}
+.hero-tagline {
+  margin-top: 1.5rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--muted);
+  max-width: 480px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero-tagline span { color: var(--text); }
+.hero-cta {
+  margin-top: 2.5rem;
+  display: flex; gap: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.9s forwards;
+}
+.btn-primary {
+  padding: 0.75rem 2rem;
+  background: var(--cyan);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  border: none; cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-ghost {
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--muted); }
+
+/* Waveform canvas */
+#waveCanvas {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  width: 100%; height: 220px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Ambient glow orbs */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.glow-orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,229,255,0.12), transparent 70%);
+  top: -100px; right: -100px;
+}
+.glow-orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(155,92,246,0.1), transparent 70%);
+  bottom: 50px; left: 40%;
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 2rem; left: 3rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--muted); letter-spacing: 0.15em;
+  display: flex; align-items: center; gap: 0.75rem;
+  opacity: 0; animation: fadeUp 1s 1.4s forwards;
+}
+.scroll-hint::before {
+  content: '';
+  display: block; width: 32px; height: 1px;
+  background: var(--muted);
+}
+
+/* ── TEASER STRIP ───────────────────────────────────── */
+.teaser-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  position: relative;
+  z-index: 1;
+}
+.teaser-card {
+  background: var(--bg);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.teaser-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.teaser-card:hover { background: var(--surface); }
+.teaser-card:hover::before { opacity: 1; }
+.teaser-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+.teaser-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: auto;
+  padding-top: 1.5rem;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+.teaser-card:hover .teaser-arrow { color: var(--cyan); }
+.teaser-line {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .teaser-strip { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  #hero { padding: 0 1.25rem; }
+  .teaser-strip { grid-template-columns: 1fr; }
+}
