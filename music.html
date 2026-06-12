@@ -25,7 +25,11 @@
 
     /* ── RESET ──────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--muted) transparent; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text); }
     body {
       background: var(--bg);
       color: var(--text);
