@@ -65,17 +65,17 @@ alan-wu-portfolio/
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
 │   ├── js/                 ← extracted scripts
-│   │   ├── main.js         ← scroll reveal + active nav highlight + hamburger menu (shared)
+│   │   ├── main.js         ← scroll reveal + active nav highlight + nav indicator + hamburger (shared)
 │   │   ├── index.js        ← waveform canvas animation
 │   │   ├── projects.js     ← tab switcher
-│   │   └── music.js        ← decorative waveform bar generator
+│   │   └── music.js        ← U-arc carousel, SoundCloud embeds, visualizer, drag scrub
 │   ├── css/                ← extracted stylesheets
 │   │   ├── main.css        ← tokens, reset, nav, footer, animations, .page-hero base (shared)
 │   │   ├── index.css       ← hero, waveform, glow orbs, buttons, teaser strip
 │   │   ├── about.css       ← about grid, stats, skills
 │   │   ├── experience.css  ← experience list + page-hero bg override
 │   │   ├── projects.css    ← tabs, project cards, tab panels
-│   │   ├── music.css       ← music grid, cards, page-hero override (spacious)
+│   │   ├── music.css       ← U-arc carousel layout, mc-* components, visualizer, flex-fill section
 │   │   └── contact.css     ← contact section (centered layout, watermark)
 │   ├── music/              ← .mp3 / .mp4 files go here
 │   │   └── README.md       ← format: slug.mp3, metadata in music-data.js
@@ -99,12 +99,13 @@ alan-wu-portfolio/
 **Multi-page notes:**
 - Styles live in `assets/css/` — `main.css` is shared by all pages; each page also links its own `[pagename].css`. No inline `<style>` blocks.
 - Nav logo (`AW.DEV`) links to `index.html` on all pages.
-- Active nav link is highlighted in `var(--cyan)` via JS in `main.js` checking `window.location.pathname`.
+- **Active nav link** is highlighted in `var(--text)` (bright white) via JS in `main.js`. On `index.html` the logo itself is treated as the active element. Non-active links stay `var(--muted)`.
+- **Nav sliding indicator:** all 6 pages have `<div class="nav-indicator"></div>` as the first child of `.nav-links`. On page load, `main.js` positions it over the active link using `getBoundingClientRect()` (works even for the logo, which sits outside `.nav-links`). Cross-page slide animation: before navigating, the current indicator position is saved to `sessionStorage`; on the new page it snaps to the saved position then slides to the current link via a double-`requestAnimationFrame` + CSS `transition`. Do NOT add `document.fonts.ready.then(positionIndicator)` — it races with the double-rAF and kills the animation when fonts are cached.
 - **Mobile nav:** all 6 pages have a `.nav-hamburger` button inside `<nav>`. `main.js` builds a `.nav-mobile-overlay` div appended to `<body>` (not inside `<nav>`) to avoid the `backdrop-filter` containing-block issue, clones the nav links into it, and toggles it on hamburger click. Overlay is `position: fixed; inset: 0; z-index: 99` with `background: var(--bg)`.
 - `index.html` is a pure landing page: full-viewport hero + a single teaser strip (4 `.teaser-card` elements linking to each inner page). No full content sections.
-- Inner pages (`about.html`, `experience.html`, `projects.html`, `music.html`, `contact.html`) each have a `.page-hero` div at top (section label + heading).
-- `music.html` uses extra padding on `.page-hero` for breathing room while tracks are placeholders.
+- Inner pages (`about.html`, `experience.html`, `projects.html`, `contact.html`) each have a `.page-hero` div at top (section label + heading). `music.html` does NOT use `.page-hero` — it has its own `.mc-header` integrated into the carousel layout.
 - **Sticky footer:** all pages use `body { display: flex; flex-direction: column; min-height: 100vh; }` and `<main>` with `flex: 1` to push the footer to the bottom of the viewport.
+- **music.html layout exception:** `music.css` adds `body:has(#music) main { display: flex; flex-direction: column }` and `#music { flex: 1 }` so the section fills `<main>` exactly with no gap above the footer. Do not add `min-height` to `#music` — the flex fill handles it.
 - **Hero animation:** `.hero-eyebrow`, `.hero-name`, `.hero-tagline`, `.hero-cta`, `.scroll-hint` start at `opacity: 0; transform: translateY(20px)` with a CSS `transition`. `index.js` triggers each via `setTimeout` at staggered delays (300–1400 ms). Do NOT use CSS `@keyframes` or `animation:` for these — the JS setTimeout approach is intentional (CSS animation fill-mode proved unreliable on GitHub Pages / Windows with reduce-motion OS settings).
 - **prefers-reduced-motion:** `main.css` has a `@media (prefers-reduced-motion: reduce)` block that sets `transition: none !important` globally and forces `opacity: 1` on both `.reveal` and all hero elements as a CSS fallback. `index.js` also checks `window.matchMedia` and skips timeouts to reveal hero elements immediately.
 
@@ -159,8 +160,38 @@ Files: MP3 / MP4 in `/assets/music/`
 6. **Reveal animation class is `.reveal`.** Add it to any new section heading or card. The IntersectionObserver in `main.js` toggles `.visible` (which sets `opacity: 1; transform: none` via CSS) when the element enters the viewport.
 7. **Waveform canvas (`#waveCanvas`) lives in `#hero` only.** Do not duplicate it.
 8. **Project cards** follow the `.project-card` structure exactly — type, name, desc, stack tags, links.
-9. **Music cards** follow the `.music-card` structure — genre, waveform div `#wfN`, title, meta.
+9. **Music page uses a horizontal U-arc carousel**, not a grid. Cards are `.mc-card` elements injected by `music.js` from the `TRACKS` array (17 SoundCloud tracks). The active card expands to show a lazy-loaded SoundCloud iframe. Do not add `.music-card` or `.page-hero` to `music.html` — the old grid structure no longer exists.
 10. **Tab system:** CS projects are in `#tab-cs`, music tech in `#tab-music-tech`. Adding a new tab requires updating both the `.projects-tabs` nav and adding a new `#tab-X` panel.
+11. **Nav indicator:** every `<nav>` has `<div class="nav-indicator"></div>` as the first child of `.nav-links`. Styles are in `main.css`. Logic is in `main.js`. Do not remove it or inline-position it via CSS — JS sets `left`, `width`, and `opacity` at runtime.
+
+---
+
+## Music Page Architecture
+
+`music.html` was fully redesigned (Jun 2026) into a horizontal U-arc carousel — no grid, no `.page-hero`.
+
+**HTML structure:**
+```html
+<section id="music">
+  <div class="mc-header">          <!-- .section-label + .mc-heading, both have .reveal -->
+  <div class="mc-clip">            <!-- overflow: hidden, fixed height 420px -->
+    <div class="mc-stage" id="mcStage">   <!-- cards injected by JS -->
+  <div class="mc-footer">
+    <div class="mc-viz" id="mcViz">       <!-- 17 visualizer bars injected by JS -->
+    <div class="mc-counter">             <!-- X / 17 -->
+```
+
+**JS (`music.js`) key facts:**
+- `TRACKS` array: 17 objects with `{ title, genre, id, token }` (SoundCloud track IDs + secret tokens)
+- U-arc positions defined in `STEPS` array — 5 entries for offsets 0–4+, with `x/y/scale/opacity`
+- Only the active card has a SoundCloud iframe in the DOM (lazy-injected on `goTo()`, removed on deactivate)
+- Scroll capture: `mouseenter`/`mouseleave` on the active card adds/removes a `{ passive: false }` wheel listener — no overlay div on the iframe
+- `isThrottled` flag (600 ms) prevents scroll accumulation
+- Visualizer: 17 bars, bell-curve height falloff from active index, drag-to-scrub via `mousedown`/`mousemove` on `.mc-viz`
+- Bar width is calculated dynamically: `(480 - 16 * 4) / 17 ≈ 24.5px` — do not set bar width in CSS
+- Idle animation: `startVizIdle()` nudges 3–4 random non-active bars every 200 ms
+
+**To add a track:** append an entry to the `TRACKS` array in `music.js` and update `.mc-total` if hardcoded.
 
 ---
 
