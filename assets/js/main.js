@@ -10,6 +10,7 @@ reveals.forEach(el => observer.observe(el));
 // ── Active nav highlight + sliding indicator ──────────
 const page       = window.location.pathname.split('/').pop() || 'index.html';
 const navLinksEl = document.querySelector('.nav-links');
+const logoEl     = document.querySelector('.nav-logo');
 let activeNavLink = null;
 
 document.querySelectorAll('.nav-links a').forEach(a => {
@@ -19,12 +20,28 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   }
 });
 
+// On the landing page treat the logo as the active element
+if (!activeNavLink && (page === 'index.html' || page === '') && logoEl) {
+  logoEl.style.color = 'var(--text)';
+  activeNavLink = logoEl;
+}
+
+// Use getBoundingClientRect so the logo (outside .nav-links) can also be measured
+function getIndicatorPos(linkEl) {
+  const PAD_X         = 12;
+  const containerRect = navLinksEl.getBoundingClientRect();
+  const linkRect      = linkEl.getBoundingClientRect();
+  return {
+    left:  (linkRect.left - containerRect.left - PAD_X) + 'px',
+    width: (linkRect.width + PAD_X * 2) + 'px',
+  };
+}
+
 function positionIndicator() {
   const indicator = document.querySelector('.nav-indicator');
-  if (!indicator || !activeNavLink) return;
-  const PAD_X      = 12;
-  const targetLeft = (activeNavLink.offsetLeft - PAD_X) + 'px';
-  const targetW    = (activeNavLink.offsetWidth + PAD_X * 2) + 'px';
+  if (!indicator || !activeNavLink || !navLinksEl) return;
+
+  const { left: targetLeft, width: targetW } = getIndicatorPos(activeNavLink);
 
   const prevLeft = sessionStorage.getItem('navPrevLeft');
   const prevW    = sessionStorage.getItem('navPrevWidth');
@@ -32,7 +49,6 @@ function positionIndicator() {
   sessionStorage.removeItem('navPrevWidth');
 
   if (prevLeft && prevLeft !== targetLeft) {
-    // Snap to previous page's position, then slide to current
     indicator.style.left    = prevLeft;
     indicator.style.width   = prevW || targetW;
     indicator.style.opacity = '1';
@@ -50,20 +66,19 @@ function positionIndicator() {
   }
 }
 positionIndicator();
-document.fonts.ready.then(positionIndicator);
+// Note: intentionally not calling positionIndicator on fonts.ready —
+// doing so races with the double-rAF slide animation when fonts are cached.
 
-// Save indicator position before navigating so next page can slide from here
-if (navLinksEl) {
-  navLinksEl.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      const ind = document.querySelector('.nav-indicator');
-      if (ind && ind.style.opacity === '1') {
-        sessionStorage.setItem('navPrevLeft',  ind.style.left);
-        sessionStorage.setItem('navPrevWidth', ind.style.width);
-      }
-    });
-  });
+// Save position before navigating so the next page can slide from here
+function saveIndicatorPos() {
+  const ind = document.querySelector('.nav-indicator');
+  if (ind && ind.style.opacity === '1') {
+    sessionStorage.setItem('navPrevLeft',  ind.style.left);
+    sessionStorage.setItem('navPrevWidth', ind.style.width);
+  }
 }
+if (logoEl)     logoEl.addEventListener('click', saveIndicatorPos);
+if (navLinksEl) navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', saveIndicatorPos));
 
 // ── Hamburger menu ────────────────────────────────────
 // Overlay is appended to <body> directly to avoid backdrop-filter containing-block
