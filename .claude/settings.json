@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/propose_claude_md.py"
+            "command": "py .claude/hooks/propose_claude_md.py"
           }
         ]
       }
@@ -17,10 +17,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/session_start.py"
+            "command": "py .claude/hooks/session_start.py"
           }
         ]
       }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
