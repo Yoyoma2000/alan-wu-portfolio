@@ -1,14 +1,14 @@
 /* ── SECTION ──────────────────────────────────────────── */
 #music {
   background: var(--bg2);
-  padding: 7rem 0 5rem;
+  padding: 2.5rem 0 1rem;
 }
 
 /* ── HEADER ───────────────────────────────────────────── */
 .mc-header {
   text-align: center;
   padding: 0 1.5rem;
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 .mc-header .section-label { margin-bottom: 0.75rem; }
 .mc-heading {
@@ -23,14 +23,14 @@
 /* ── CLIP WRAPPER (overflow guard) ───────────────────── */
 .mc-clip {
   width: 100%;
-  height: 520px;
+  height: 420px;
   overflow: hidden;
 }
 
 /* ── STAGE ────────────────────────────────────────────── */
 .mc-stage {
   position: relative;
-  height: 520px;
+  height: 420px;
   width: 100%;
   overflow: visible;
   cursor: grab;
@@ -113,17 +113,20 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   height: 48px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 0.25rem;
   padding: 0 1rem;
-  margin-bottom: 0.25rem;
 }
 .mc-viz-bar {
-  width: 4px;
+  width: 6px;
   min-height: 4px;
   background: #6b7280;
   border-radius: 2px;
   flex-shrink: 0;
+  cursor: pointer;
   transition: height 0.4s ease, background 0.3s ease;
 }
 
@@ -133,7 +136,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .mc-counter {
   font-family: var(--font-mono);

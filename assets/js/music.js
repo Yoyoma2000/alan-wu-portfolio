@@ -76,6 +76,7 @@ if (vizEl) {
   for (let i = 0; i < TRACKS.length; i++) {
     const bar = document.createElement('div');
     bar.className = 'mc-viz-bar';
+    bar.addEventListener('click', () => goTo(i));
     vizEl.appendChild(bar);
     VIZ_BARS.push(bar);
   }
