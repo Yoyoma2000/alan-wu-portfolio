@@ -1,7 +1,7 @@
 /* ── SECTION ──────────────────────────────────────────── */
 #music {
   background: var(--bg2);
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px - 3rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
