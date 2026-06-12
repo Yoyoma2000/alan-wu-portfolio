@@ -61,6 +61,8 @@ function getStep(abs) {
   return STEPS[Math.min(abs, STEPS.length - 1)];
 }
 
+let activeIdx = 0;
+
 // ── Visualizer ────────────────────────────────────────────
 const VIZ_BELL = [1, 0.70, 0.45, 0.28, 0.16, 0.08];
 
@@ -77,6 +79,8 @@ if (vizEl) {
     vizEl.appendChild(bar);
     VIZ_BARS.push(bar);
   }
+  console.log(`Visualizer: ${VIZ_BARS.length} bars created`);
+  updateViz();
 }
 
 function updateViz() {
@@ -84,11 +88,11 @@ function updateViz() {
     const abs = Math.abs(i - activeIdx);
     bar.style.height = bellH(abs) * 100 + '%';
     if (abs === 0) {
-      bar.style.background = 'var(--cyan)';
+      bar.style.background = '#00e5ff';
       bar.style.opacity    = '1';
-      bar.style.boxShadow  = '0 0 8px var(--cyan)';
+      bar.style.boxShadow  = '0 0 8px #00e5ff';
     } else {
-      bar.style.background = 'var(--muted)';
+      bar.style.background = '#6b7280';
       bar.style.opacity    = '0.3';
       bar.style.boxShadow  = 'none';
     }
@@ -117,7 +121,6 @@ function startVizIdle() {
   }, 200);
 }
 
-let activeIdx = 0;
 let isThrottled = false;
 
 function navigate(dir) {

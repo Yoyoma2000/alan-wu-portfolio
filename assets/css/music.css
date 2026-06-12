@@ -112,16 +112,19 @@
 .mc-viz {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   gap: 3px;
-  height: 40px;
+  height: 48px;
+  padding: 0 1rem;
   margin-bottom: 0.25rem;
 }
 .mc-viz-bar {
   width: 4px;
-  background: var(--muted);
-  opacity: 0.3;
-  transition: height 0.15s ease;
+  min-height: 4px;
+  background: #6b7280;
+  border-radius: 2px;
   flex-shrink: 0;
+  transition: height 0.4s ease, background 0.3s ease;
 }
 
 /* ── FOOTER ───────────────────────────────────────────── */
