@@ -2,7 +2,7 @@
 
 Personal portfolio site for Alan Wu. Hosted on GitHub Pages.
 
-**Live site:** https://[your-github-username].github.io/alan-wu-portfolio/
+**Live site:** https://Yoyoma2000.github.io/alan-wu-portfolio/
 
 ---
 
