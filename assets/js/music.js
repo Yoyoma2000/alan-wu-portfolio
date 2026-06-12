@@ -62,36 +62,24 @@ function getStep(abs) {
 }
 
 let activeIdx = 0;
-let wheelLock = false;
+let isThrottled = false;
 
 function navigate(dir) {
-  if (wheelLock) return;
-  wheelLock = true;
+  if (isThrottled) return;
+  isThrottled = true;
   goTo(activeIdx + dir);
-  setTimeout(() => { wheelLock = false; }, 600);
+  setTimeout(() => { isThrottled = false; }, 600);
 }
 
-// Inject iframe + wheel-capture overlay into the active card's embed div.
-// The overlay intercepts wheel events from the iframe area and passes
-// clicks through by temporarily removing pointer-events on pointerdown.
+// Refs for active card's mouseenter/mouseleave/wheel handlers so they
+// can be removed when a different card becomes active.
+let activeCardEl      = null;
+let cardWheelHandler  = null;
+let cardEnterHandler  = null;
+let cardLeaveHandler  = null;
+
 function injectIframe(embed, idx) {
   if (embed.querySelector('iframe')) return;
-
-  const overlay = document.createElement('div');
-  overlay.className = 'mc-iframe-overlay';
-  overlay.addEventListener('wheel', e => {
-    e.preventDefault();
-    const dir = Math.abs(e.deltaX) >= Math.abs(e.deltaY)
-      ? Math.sign(e.deltaX)
-      : Math.sign(e.deltaY);
-    navigate(dir);
-  }, { passive: false });
-  overlay.addEventListener('pointerdown', () => {
-    overlay.style.pointerEvents = 'none';
-    setTimeout(() => { overlay.style.pointerEvents = ''; }, 250);
-  });
-  embed.appendChild(overlay);
-
   const f = document.createElement('iframe');
   f.setAttribute('src',         makeSrc(TRACKS[idx].id, TRACKS[idx].token));
   f.setAttribute('width',       '100%');
@@ -128,6 +116,28 @@ function goTo(index) {
 
   const currentEl = document.querySelector('.mc-current');
   if (currentEl) currentEl.textContent = activeIdx + 1;
+
+  // Swap mouseenter/wheel capture from old active card to new one.
+  // This avoids any overlay on the iframe — SoundCloud controls are
+  // always directly clickable. Scroll over the card (non-iframe area)
+  // still navigates; scroll over the iframe goes to the embed itself.
+  if (activeCardEl) {
+    activeCardEl.removeEventListener('mouseenter', cardEnterHandler);
+    activeCardEl.removeEventListener('mouseleave', cardLeaveHandler);
+    activeCardEl.removeEventListener('wheel', cardWheelHandler);
+  }
+  activeCardEl     = cards[activeIdx];
+  cardWheelHandler = e => {
+    e.preventDefault();
+    const dir = Math.abs(e.deltaX) >= Math.abs(e.deltaY)
+      ? Math.sign(e.deltaX)
+      : Math.sign(e.deltaY);
+    navigate(dir);
+  };
+  cardEnterHandler = () => activeCardEl.addEventListener('wheel', cardWheelHandler, { passive: false });
+  cardLeaveHandler = () => activeCardEl.removeEventListener('wheel', cardWheelHandler);
+  activeCardEl.addEventListener('mouseenter', cardEnterHandler);
+  activeCardEl.addEventListener('mouseleave', cardLeaveHandler);
 }
 
 // ── Mobile: lazy-load all iframes via IntersectionObserver
@@ -161,7 +171,7 @@ if (isMobile()) {
   goTo(0);
 }
 
-// ── Stage wheel — captures scroll outside iframe area ─────
+// ── Stage wheel — captures scroll on non-iframe card areas ─
 stage.addEventListener('wheel', e => {
   if (isMobile()) return;
   e.preventDefault();
