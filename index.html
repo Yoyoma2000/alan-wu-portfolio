@@ -202,11 +202,6 @@
       letter-spacing: -0.02em;
       margin-bottom: 3rem;
     }
-    .divider {
-      width: 100%; height: 1px;
-      background: var(--border);
-      margin: 0;
-    }
 
     /* ── ABOUT ──────────────────────────────────────────── */
     #about { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
@@ -264,221 +259,6 @@
       transition: border-color 0.2s, color 0.2s;
     }
     .skill-tag:hover { border-color: var(--cyan); color: var(--cyan); }
-
-    /* ── EXPERIENCE ─────────────────────────────────────── */
-    #experience { background: var(--bg2); }
-    .exp-list { display: flex; flex-direction: column; }
-    .exp-item {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 3rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .exp-item:first-child { border-top: 1px solid var(--border); }
-    .exp-meta { padding-top: 0.2rem; }
-    .exp-date {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-    .exp-company {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-top: 0.25rem;
-    }
-    .exp-location {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.1rem;
-    }
-    .exp-content {}
-    .exp-role {
-      font-size: 0.8rem;
-      font-family: var(--font-mono);
-      color: var(--cyan);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    .exp-tech {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-    .tech-tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      padding: 0.2rem 0.6rem;
-      background: rgba(0,229,255,0.07);
-      border: 1px solid rgba(0,229,255,0.2);
-      color: var(--cyan);
-    }
-    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .exp-bullets li {
-      font-size: 0.9rem;
-      color: var(--muted);
-      padding-left: 1.25rem;
-      position: relative;
-      line-height: 1.6;
-    }
-    .exp-bullets li::before {
-      content: '—';
-      position: absolute; left: 0;
-      color: var(--violet);
-    }
-
-    /* ── PROJECTS ───────────────────────────────────────── */
-    #projects {}
-    .projects-tabs {
-      display: flex; gap: 0;
-      margin-bottom: 3rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .tab-btn {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.75rem 1.75rem;
-      background: none; border: none;
-      color: var(--muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .tab-btn.active { color: var(--cyan); border-bottom-color: var(--cyan); }
-    .tab-btn:hover:not(.active) { color: var(--text); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1px;
-      background: var(--border);
-    }
-    .project-card {
-      background: var(--bg);
-      padding: 2rem;
-      display: flex; flex-direction: column;
-      transition: background 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .project-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--cyan), var(--violet));
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .project-card:hover { background: var(--surface); }
-    .project-card:hover::before { opacity: 1; }
-    .project-type {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--violet);
-      margin-bottom: 0.75rem;
-    }
-    .project-name {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-      line-height: 1.2;
-    }
-    .project-desc {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: 1.5rem;
-    }
-    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
-    .project-stack span {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      padding: 0.2rem 0.5rem;
-      background: var(--surface);
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-    .project-links { display: flex; gap: 1rem; }
-    .project-link {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      display: flex; align-items: center; gap: 0.4rem;
-      transition: opacity 0.2s;
-    }
-    .project-link:hover { opacity: 0.7; }
-    .project-link-placeholder { color: var(--muted); cursor: default; }
-
-    /* Tab panel visibility */
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    /* ── MUSIC ──────────────────────────────────────────── */
-    #music { background: var(--bg2); }
-    .music-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px;
-      background: var(--border);
-    }
-    .music-card {
-      background: var(--bg2);
-      padding: 1.75rem;
-      display: flex; flex-direction: column; gap: 1rem;
-      transition: background 0.2s;
-      cursor: pointer;
-    }
-    .music-card:hover { background: var(--surface); }
-    .music-waveform {
-      height: 48px;
-      display: flex; align-items: center; gap: 2px;
-    }
-    .wf-bar {
-      flex: 1;
-      background: linear-gradient(180deg, var(--cyan), var(--violet));
-      border-radius: 1px;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-    .music-card:hover .wf-bar { opacity: 1; }
-    .music-title {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .music-genre {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--cyan);
-      text-transform: uppercase;
-    }
-    .music-meta {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .music-placeholder {
-      grid-column: 1 / -1;
-      padding: 3rem;
-      text-align: center;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--muted);
-      border: 1px dashed var(--border);
-      background: var(--bg2);
-    }
 
     /* ── CONTACT ────────────────────────────────────────── */
     #contact {
@@ -558,7 +338,6 @@
       section { padding: 5rem 1.25rem; }
       #hero { padding: 0 1.25rem; }
       #about { grid-template-columns: 1fr; gap: 2.5rem; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -571,12 +350,12 @@
 
   <!-- NAV -->
   <nav>
-    <span class="nav-logo">AW.DEV</span>
+    <a href="index.html" class="nav-logo">AW.DEV</a>
     <div class="nav-links">
       <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#music">Music</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a href="music.html">Music</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -593,7 +372,7 @@
       building at the edge of code and sound.
     </p>
     <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View Work</a>
+      <a href="projects.html" class="btn-primary">View Work</a>
       <a href="#contact" class="btn-ghost">Get in Touch</a>
     </div>
 
@@ -601,22 +380,20 @@
     <span class="scroll-hint">Scroll to explore</span>
   </section>
 
-  <div class="divider"></div>
-
   <!-- ABOUT -->
   <section id="about">
     <div class="about-left">
       <p class="section-label reveal">About</p>
       <h2 class="section-title reveal">Two worlds,<br/>one toolkit.</h2>
       <p class="about-text reveal">
-        I'm a <strong>4th-year CS student at UBC</strong> with a 4.30 GPA, building full-stack 
-        web apps, AI-powered tools, and interactive 3D experiences. I've shipped production 
-        features at a Vancouver AI startup and contributed end-to-end to a nonprofit booking 
+        I'm a <strong>4th-year CS student at UBC</strong> with a 4.30 GPA, building full-stack
+        web apps, AI-powered tools, and interactive 3D experiences. I've shipped production
+        features at a Vancouver AI startup and contributed end-to-end to a nonprofit booking
         system serving real users.
       </p>
       <p class="about-text reveal" style="margin-top:1rem;">
-        Outside of code, I produce music across <strong>cinematic, EDM, pop, and rock</strong> — 
-        and I play piano and saxophone. Both worlds reward the same thing: systems thinking 
+        Outside of code, I produce music across <strong>cinematic, EDM, pop, and rock</strong> —
+        and I play piano and saxophone. Both worlds reward the same thing: systems thinking
         and an ear for what feels right.
       </p>
 
@@ -693,189 +470,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <p class="section-label reveal">Experience</p>
-    <h2 class="section-title reveal">Where I've<br/>shipped.</h2>
-
-    <div class="exp-list">
-
-      <div class="exp-item reveal">
-        <div class="exp-meta">
-          <div class="exp-date">Jan – Apr 2026</div>
-          <div class="exp-company">Surrey Food Bank</div>
-          <div class="exp-location">Surrey, BC</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Full Stack Developer</div>
-          <div class="exp-tech">
-            <span class="tech-tag">React.js</span>
-            <span class="tech-tag">Django</span>
-            <span class="tech-tag">PostgreSQL</span>
-            <span class="tech-tag">Tailwind</span>
-            <span class="tech-tag">JIRA</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Architected a full-stack appointment booking system with automated timeslot generation from admin-defined windows, supporting 15 and 30-minute durations.</li>
-            <li>Built a client intake questionnaire system with a dedicated REST endpoint, gating booking access behind completion checks enforced on both frontend and backend.</li>
-            <li>Independently designed the Tiny Bundles feature end-to-end — pregnancy-specific Wednesday booking slots integrated into the existing questionnaire flow.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-meta">
-          <div class="exp-date">May – Sep 2025</div>
-          <div class="exp-company">ZenNyxAI Inc.</div>
-          <div class="exp-location">Vancouver, BC</div>
-        </div>
-        <div class="exp-content">
-          <div class="exp-role">Web Feature Engineer</div>
-          <div class="exp-tech">
-            <span class="tech-tag">React.js</span>
-            <span class="tech-tag">React-Konva</span>
-            <span class="tech-tag">Marked.js</span>
-            <span class="tech-tag">jsPDF</span>
-            <span class="tech-tag">KaTeX</span>
-            <span class="tech-tag">OpenAI</span>
-          </div>
-          <ul class="exp-bullets">
-            <li>Designed and delivered a core MindMap feature for EasyNoteAI — converting AI-generated Markdown into interactive, editable node-graph visualizations via React-Konva.</li>
-            <li>Engineered a Markdown parsing pipeline with Marked.js and KaTeX, enabling real-time node add, delete, modify, and undo operations on dynamic tree graphs.</li>
-            <li>Implemented multi-format export (PNG, SVG, PDF) via jsPDF and react-konva-to-svg, addressing top user pain points from competitor analysis.</li>
-          </ul>
-        </div>
-      </div>
-
-
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-label reveal">Projects</p>
-    <h2 class="section-title reveal">What I've<br/>built.</h2>
-
-    <div class="projects-tabs">
-      <button class="tab-btn active" data-tab="cs">CS &amp; Engineering</button>
-      <button class="tab-btn" data-tab="music-tech">Music Tech</button>
-    </div>
-
-    <div class="tab-panel active" id="tab-cs">
-      <div class="projects-grid">
-
-        <div class="project-card reveal">
-          <div class="project-type">Personal · 2025</div>
-          <div class="project-name">39WithYou</div>
-          <p class="project-desc">AI-powered chatbot with an animated 3D character model. LLM inference backend with locally run TTS models for real-time voice interaction, synchronized to dynamic gesture mapping.</p>
-          <div class="project-stack">
-            <span>TypeScript</span><span>React.js</span><span>Three.js</span>
-            <span>Node.js</span><span>Claude API</span><span>TTS Models</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Hackathon · Oct 2024 · 🏆 2nd Place</div>
-          <div class="project-name">VoiceBase</div>
-          <p class="project-desc">Full-stack tool for generating custom voicebanks for voice synthesis, built in a team of 4 at UBC Biztech Hellohacks. Led frontend with voice recording, document management, and ZIP downloads.</p>
-          <div class="project-stack">
-            <span>React.js</span><span>Spring Boot</span><span>Node.js</span>
-            <span>Tailwind</span><span>jszip</span><span>react-mic</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Personal · 2024</div>
-          <div class="project-name">FiscordProject</div>
-          <p class="project-desc">Real-time messaging platform with live friend-list based DMs, animated web components, and seamless routing. Google + email authentication with Firebase as the live database.</p>
-          <div class="project-stack">
-            <span>TypeScript</span><span>Next.js</span><span>Firebase</span>
-            <span>Tailwind</span><span>NoSQL</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Academic · 2024</div>
-          <div class="project-name">WhereToEat?</div>
-          <p class="project-desc">Restaurant database app in Java with search, order, and recommendation functions. Developed 9 user stories for TDD; achieved 100% JUnit test coverage.</p>
-          <div class="project-stack">
-            <span>Java</span><span>Swing</span><span>JUnit</span>
-            <span>JSON</span><span>IntelliJ</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-type">Academic · 2024</div>
-          <div class="project-name">Tennis Rank Predictor</div>
-          <p class="project-desc">Linear regression model in R to predict a player's best ATP ranking using ELO rating and current rank. Achieved RMSPE of 24 using tidyverse, tidyModels, and GGAlly for data wrangling and visualization.</p>
-          <div class="project-stack">
-            <span>R</span><span>tidyverse</span><span>tidyModels</span><span>GGAlly</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link project-link-placeholder">GitHub — coming soon</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-music-tech">
-      <div class="projects-grid">
-        <div class="music-placeholder">
-          🎛️ Music tech projects coming soon — drop your files and Claude Code will scaffold the cards automatically.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- MUSIC -->
-  <section id="music">
-    <p class="section-label reveal">Music</p>
-    <h2 class="section-title reveal">Sounds I've<br/>made.</h2>
-
-    <div class="music-grid" id="musicGrid">
-      <!-- Placeholder cards — replace with real tracks -->
-      <div class="music-card reveal" id="placeholder-1">
-        <div class="music-genre">Cinematic</div>
-        <div class="music-waveform" id="wf1"></div>
-        <div class="music-title">Track Title</div>
-        <div class="music-meta">MP3 · Add your file to /assets/music/</div>
-      </div>
-      <div class="music-card reveal" id="placeholder-2">
-        <div class="music-genre">EDM</div>
-        <div class="music-waveform" id="wf2"></div>
-        <div class="music-title">Track Title</div>
-        <div class="music-meta">MP3 · Add your file to /assets/music/</div>
-      </div>
-      <div class="music-card reveal" id="placeholder-3">
-        <div class="music-genre">Pop / Rock</div>
-        <div class="music-waveform" id="wf3"></div>
-        <div class="music-title">Track Title</div>
-        <div class="music-meta">MP3 · Add your file to /assets/music/</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- CONTACT -->
   <section id="contact">
     <h2 class="contact-heading reveal">Let's build<br/>something.</h2>
@@ -950,25 +544,12 @@
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
 
-    // ── Tabs ──────────────────────────────────────────────
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-      });
-    });
-
-    // ── Music waveform bars (random decorative) ───────────
-    ['wf1','wf2','wf3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      for (let i = 0; i < 40; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'wf-bar';
-        bar.style.height = (15 + Math.random() * 80) + '%';
-        el.appendChild(bar);
+    // ── Active nav highlight ──────────────────────────────
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      const href = a.getAttribute('href');
+      if (href && !href.startsWith('#') && href === page) {
+        a.style.color = 'var(--cyan)';
       }
     });
   </script>

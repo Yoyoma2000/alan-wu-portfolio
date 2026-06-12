@@ -55,7 +55,10 @@
 
 ```
 alan-wu-portfolio/
-├── index.html              ← entire site (single-file for now)
+├── index.html              ← Hero + About + Contact (home page)
+├── experience.html         ← Experience section (full page)
+├── projects.html           ← Projects section with CS/Music Tech tabs (full page)
+├── music.html              ← Music section (full page)
 ├── CLAUDE.md               ← you are here
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
@@ -77,6 +80,13 @@ alan-wu-portfolio/
     └── workflows/
         └── deploy.yml      ← GitHub Pages auto-deploy on push to main
 ```
+
+**Multi-page notes:**
+- Each HTML file is fully self-contained (full `<style>` block copied into every page — no shared CSS file yet).
+- Nav logo (`AW.DEV`) links to `index.html` on all pages.
+- Active nav link is highlighted via an inline `<script>` checking `window.location.pathname` on each page.
+- Inner pages (`experience.html`, `projects.html`, `music.html`) have a `.page-hero` div at top (section label + heading) in place of the old in-section headings.
+- `music.html` uses extra padding on `.page-hero` to give breathing room while tracks are placeholders.
 
 ---
 
@@ -122,7 +132,7 @@ Files: MP3 / MP4 in `/assets/music/`
 ## Critical Rules for Claude Code
 
 1. **Never change design tokens.** Colors, fonts, and spacing are locked.
-2. **Single HTML file** — keep all styles/scripts in `index.html` until the project is explicitly modularized.
+2. **Multi-page, self-contained files** — the site is split across `index.html`, `experience.html`, `projects.html`, and `music.html`. Keep all styles/scripts inline in each file (no shared CSS/JS files yet). When adding content, edit the relevant page file.
 3. **No frameworks.** Do not introduce React, Vite, or any bundler without an explicit instruction to do so.
 4. **GitHub Pages compatibility.** Everything must work as static files — no server-side code, no Node process.
 5. **Music files are local assets.** Reference them as `./assets/music/filename.mp3` — never embed external streaming URLs without asking.
