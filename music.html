@@ -27,36 +27,23 @@
   </nav>
 
   <main>
-    <!-- PAGE HERO -->
-    <div class="page-hero">
-      <p class="section-label reveal">Music</p>
-      <h1 class="section-title reveal">Sounds I've<br/>made.</h1>
-      <p class="page-hero-sub reveal">
-        <span>Cinematic · EDM · Pop · Rock</span> — piano and saxophone, produced in the box.
-      </p>
-    </div>
-
-    <!-- MUSIC -->
     <section id="music">
-      <div class="music-grid" id="musicGrid">
-        <!-- Placeholder cards — replace with real tracks -->
-        <div class="music-card reveal" id="placeholder-1">
-          <div class="music-genre">Cinematic</div>
-          <div class="music-waveform" id="wf1"></div>
-          <div class="music-title">Track Title</div>
-          <div class="music-meta">MP3 · Add your file to /assets/music/</div>
+      <div class="mc-header">
+        <p class="section-label">Music</p>
+        <h1 class="mc-heading">Sounds I've made.</h1>
+      </div>
+      <div class="mc-wrap">
+        <button class="mc-btn mc-prev" aria-label="Previous track">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <div class="mc-viewport" id="mcViewport">
+          <!-- track cards injected by music.js -->
         </div>
-        <div class="music-card reveal" id="placeholder-2">
-          <div class="music-genre">EDM</div>
-          <div class="music-waveform" id="wf2"></div>
-          <div class="music-title">Track Title</div>
-          <div class="music-meta">MP3 · Add your file to /assets/music/</div>
-        </div>
-        <div class="music-card reveal" id="placeholder-3">
-          <div class="music-genre">Pop / Rock</div>
-          <div class="music-waveform" id="wf3"></div>
-          <div class="music-title">Track Title</div>
-          <div class="music-meta">MP3 · Add your file to /assets/music/</div>
+        <button class="mc-btn mc-next" aria-label="Next track">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="mc-counter">
+          <span class="mc-current">1</span><span> / </span><span class="mc-total">17</span>
         </div>
       </div>
     </section>
