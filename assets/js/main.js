@@ -7,11 +7,27 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 reveals.forEach(el => observer.observe(el));
 
-// ── Active nav highlight ──────────────────────────────
+// ── Active nav highlight + sliding indicator ──────────
 const page = window.location.pathname.split('/').pop() || 'index.html';
+let activeNavLink = null;
+
 document.querySelectorAll('.nav-links a').forEach(a => {
-  if (a.getAttribute('href') === page) a.style.color = 'var(--cyan)';
+  if (a.getAttribute('href') === page) {
+    a.style.color = 'var(--text)';
+    activeNavLink = a;
+  }
 });
+
+function positionIndicator() {
+  const indicator = document.querySelector('.nav-indicator');
+  if (!indicator || !activeNavLink) return;
+  const PAD_X = 12; // 0.75rem
+  indicator.style.left  = (activeNavLink.offsetLeft - PAD_X) + 'px';
+  indicator.style.width = (activeNavLink.offsetWidth + PAD_X * 2) + 'px';
+  indicator.style.opacity = '1';
+}
+positionIndicator();
+document.fonts.ready.then(positionIndicator);
 
 // ── Hamburger menu ────────────────────────────────────
 // Overlay is appended to <body> directly to avoid backdrop-filter containing-block
@@ -24,7 +40,7 @@ if (hamburger && navLinksEl) {
   overlay.className = 'nav-mobile-overlay';
   navLinksEl.querySelectorAll('a').forEach(a => {
     const link = a.cloneNode(true);
-    if (a.getAttribute('href') === page) link.style.color = 'var(--cyan)';
+    if (a.getAttribute('href') === page) link.style.color = 'var(--text)';
     overlay.appendChild(link);
   });
   document.body.appendChild(overlay);
