@@ -140,15 +140,24 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 .mc-counter {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   color: var(--muted);
+  margin-bottom: 0;
 }
 .mc-current { color: var(--cyan); }
+
+/* Tighten site footer gap on music page */
+#music ~ footer,
+body:has(#music) footer {
+  margin-top: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 
 /* ── MOBILE ───────────────────────────────────────────── */
 @media (max-width: 768px) {
