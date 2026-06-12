@@ -64,6 +64,11 @@ alan-wu-portfolio/
 ├── CLAUDE.md               ← you are here
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
+│   ├── js/                 ← extracted scripts
+│   │   ├── main.js         ← scroll reveal + active nav highlight (shared)
+│   │   ├── index.js        ← waveform canvas animation
+│   │   ├── projects.js     ← tab switcher
+│   │   └── music.js        ← decorative waveform bar generator
 │   ├── css/                ← extracted stylesheets
 │   │   ├── main.css        ← tokens, reset, nav, footer, animations, .page-hero base (shared)
 │   │   ├── index.css       ← hero, waveform, glow orbs, buttons, teaser strip

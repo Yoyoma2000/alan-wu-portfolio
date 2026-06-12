@@ -64,36 +64,7 @@
     <span>Built with HTML · CSS · JS · Hosted on GitHub Pages</span>
   </footer>
 
-  <script>
-    // ── Scroll reveal ─────────────────────────────────────
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
-
-    // ── Music waveform bars (random decorative) ───────────
-    ['wf1','wf2','wf3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      for (let i = 0; i < 40; i++) {
-        const bar = document.createElement('div');
-        bar.className = 'wf-bar';
-        bar.style.height = (15 + Math.random() * 80) + '%';
-        el.appendChild(bar);
-      }
-    });
-
-    // ── Active nav highlight ──────────────────────────────
-    const page = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      const href = a.getAttribute('href');
-      if (href && !href.startsWith('#') && href === page) {
-        a.style.color = 'var(--cyan)';
-      }
-    });
-  </script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/music.js" defer></script>
 </body>
 </html>
