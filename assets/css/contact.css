@@ -56,8 +56,6 @@
 .contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
 .contact-email-btn { background: none; cursor: pointer; }
 .contact-email-btn.copied { border-color: var(--cyan); color: var(--cyan); }
-.contact-resume-btn { margin-top: 2rem; }
-
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 768px) {
   #contact { padding: 8rem 1.25rem 4rem; }
