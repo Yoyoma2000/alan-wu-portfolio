@@ -65,9 +65,13 @@ function positionIndicator() {
     indicator.style.opacity = '1';
   }
 }
-positionIndicator();
-// Note: intentionally not calling positionIndicator on fonts.ready —
-// doing so races with the double-rAF slide animation when fonts are cached.
+// Double-rAF ensures layout (including font metrics) is stable before measuring
+// link dimensions — same pattern used internally for the cross-page slide.
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    positionIndicator();
+  });
+});
 
 // Save position before navigating so the next page can slide from here
 function saveIndicatorPos() {
