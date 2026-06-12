@@ -1,7 +1,11 @@
 /* ── SECTION ──────────────────────────────────────────── */
 #music {
   background: var(--bg2);
-  padding: 2.5rem 0 1rem;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0 1rem;
 }
 
 /* ── HEADER ───────────────────────────────────────────── */
@@ -34,6 +38,7 @@
   width: 100%;
   overflow: visible;
   cursor: grab;
+  margin-bottom: 1rem;
 }
 .mc-stage:active { cursor: grabbing; }
 
@@ -116,12 +121,11 @@
   gap: 4px;
   height: 48px;
   width: 100%;
-  max-width: 600px;
+  max-width: 480px;
   margin: 0 auto 0.25rem;
-  padding: 0 1rem;
+  user-select: none;
 }
 .mc-viz-bar {
-  width: 6px;
   min-height: 4px;
   background: #6b7280;
   border-radius: 2px;
@@ -148,7 +152,11 @@
 
 /* ── MOBILE ───────────────────────────────────────────── */
 @media (max-width: 768px) {
-  #music { padding: 5rem 0 4rem; }
+  #music {
+    min-height: 0;
+    display: block;
+    padding: 5rem 0 4rem;
+  }
 
   .mc-header { margin-bottom: 2rem; }
 

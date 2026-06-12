@@ -70,18 +70,45 @@ function bellH(abs) {
   return VIZ_BELL[Math.min(abs, VIZ_BELL.length - 1)];
 }
 
+const VIZ_GAP  = 4;
+const VIZ_W    = 480;
+const barWidth = (VIZ_W - (TRACKS.length - 1) * VIZ_GAP) / TRACKS.length;
+
 const vizEl    = document.getElementById('mcViz');
 const VIZ_BARS = [];
 if (vizEl) {
   for (let i = 0; i < TRACKS.length; i++) {
     const bar = document.createElement('div');
     bar.className = 'mc-viz-bar';
+    bar.style.width = barWidth + 'px';
     bar.addEventListener('click', () => goTo(i));
     vizEl.appendChild(bar);
     VIZ_BARS.push(bar);
   }
   console.log(`Visualizer: ${VIZ_BARS.length} bars created`);
   updateViz();
+
+  // Drag to scrub
+  let vizDragging = false;
+
+  function vizIdxFromX(clientX) {
+    const rect = vizEl.getBoundingClientRect();
+    const relX = Math.max(0, clientX - rect.left);
+    return Math.max(0, Math.min(TRACKS.length - 1, Math.floor(relX / (barWidth + VIZ_GAP))));
+  }
+
+  vizEl.addEventListener('mousedown', e => {
+    e.preventDefault();
+    vizDragging = true;
+    goTo(vizIdxFromX(e.clientX));
+  });
+  vizEl.addEventListener('mousemove', e => {
+    if (!vizDragging) return;
+    const idx = vizIdxFromX(e.clientX);
+    if (idx !== activeIdx) goTo(idx);
+  });
+  vizEl.addEventListener('mouseup',    () => { vizDragging = false; });
+  vizEl.addEventListener('mouseleave', () => { vizDragging = false; });
 }
 
 function updateViz() {
