@@ -42,6 +42,11 @@
 ### Signature Element
 **Animated three-layer waveform** at hero bottom — cyan, violet, blue sinusoidal waves running on `<canvas>`. This is the visual identity. Do not remove or replace it.
 
+Current tuned values (Jun 2026) — do not arbitrarily change these:
+- Layer speeds: cyan `0.009`, violet `0.0132`, blue `0.0054` (intentionally slow; were reduced 40% from original)
+- Canvas element opacity: `0.55` (in `index.css` `#waveCanvas`)
+- Stroke `globalAlpha` inside draw loop: `0.85` (in `index.js`)
+
 ### Layout Rules
 - Sections: `padding: 7rem 3rem` desktop, `5rem 1.25rem` mobile
 - Grid gaps: 1px with `background: var(--border)` (creates hairline grid lines)
@@ -100,7 +105,7 @@ alan-wu-portfolio/
 - Styles live in `assets/css/` — `main.css` is shared by all pages; each page also links its own `[pagename].css`. No inline `<style>` blocks.
 - Nav logo (`AW.DEV`) links to `index.html` on all pages.
 - **Active nav link** is highlighted in `var(--text)` (bright white) via JS in `main.js`. On `index.html` the logo itself is treated as the active element. Non-active links stay `var(--muted)`.
-- **Nav sliding indicator:** all 6 pages have `<div class="nav-indicator"></div>` as the first child of `.nav-links`. On page load, `main.js` positions it over the active link using `getBoundingClientRect()` (works even for the logo, which sits outside `.nav-links`). Cross-page slide animation: before navigating, the current indicator position is saved to `sessionStorage`; on the new page it snaps to the saved position then slides to the current link via a double-`requestAnimationFrame` + CSS `transition`. Do NOT add `document.fonts.ready.then(positionIndicator)` — it races with the double-rAF and kills the animation when fonts are cached.
+- **Nav sliding indicator:** all 6 pages have `<div class="nav-indicator"></div>` as the first child of `.nav-links`. On page load, `main.js` positions it over the active link using `getBoundingClientRect()` (works even for the logo, which sits outside `.nav-links`). Cross-page slide animation: before navigating, the current indicator position is saved to `sessionStorage`; on the new page it snaps to the saved position then slides to the current link via a double-`requestAnimationFrame` + CSS `transition`. **Positioning is split into two cases:** (1) Fresh page load (no `navPrevLeft` in sessionStorage) — uses `document.fonts.ready.then(positionIndicator)` so font metrics are stable before measuring; safe here because no animation is in flight. (2) Cross-page navigation (`navPrevLeft` present) — uses double-rAF; fonts are already cached so measurement is correct, and `fonts.ready` would race with the snap-then-slide animation. Do NOT collapse these into a single path. A `resize` listener also calls `positionIndicator()` (after clearing `transition`) to correct the pill when the window moves between monitors with different DPI scaling.
 - **Mobile nav:** all 6 pages have a `.nav-hamburger` button inside `<nav>`. `main.js` builds a `.nav-mobile-overlay` div appended to `<body>` (not inside `<nav>`) to avoid the `backdrop-filter` containing-block issue, clones the nav links into it, and toggles it on hamburger click. Overlay is `position: fixed; inset: 0; z-index: 99` with `background: var(--bg)`.
 - `index.html` is a pure landing page: full-viewport hero + a single teaser strip (4 `.teaser-card` elements linking to each inner page). No full content sections.
 - Inner pages (`about.html`, `experience.html`, `projects.html`, `contact.html`) each have a `.page-hero` div at top (section label + heading). `music.html` does NOT use `.page-hero` — it has its own `.mc-header` integrated into the carousel layout.
