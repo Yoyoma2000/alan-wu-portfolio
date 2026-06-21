@@ -202,6 +202,7 @@ All 17 tracks served via **SoundCloud private embeds** — no local audio files.
 16. **Python hooks on Windows:** the hook runner uses `py` (not `python3`) on Windows. If hooks fail with "command not found", check that `py` is on PATH.
 17. **about.html has no `.page-hero`.** The "About" section label and "Two worlds, one toolkit." heading live inside `.about-left` within `#about`, using `.about-heading` (not `.section-title`). Do not add a `.page-hero` div to about.html.
 18. **experience.html loads `experience.js`** and **contact.html loads `contact.js`** — both files exist in `assets/js/`. Do not remove these script tags.
+19. **Visually verify layout/sizing changes before committing.** For any change to spacing, width, layout, or visual sizing (e.g. the music visualizer width, card dimensions, grid layout), serve the site locally (`python -m http.server`) and open the affected page in a browser before committing. Show/describe the result and get confirmation rather than committing on the first guess — sizing changes are easy to get wrong on the first try (e.g. picking 2x when 1.5x was wanted).
 
 ---
 
@@ -262,7 +263,8 @@ All 17 tracks served via **SoundCloud private embeds** — no local audio files.
 - Scroll capture: `mouseenter`/`mouseleave` on the active card adds/removes a `{ passive: false }` wheel listener — no overlay div on the iframe
 - `isThrottled` flag (600 ms) prevents scroll accumulation
 - Visualizer: 17 bars, bell-curve height falloff from active index, drag-to-scrub via `mousedown`/`mousemove` on `.mc-viz`
-- Bar width calculated dynamically: `(480 - 16 * 4) / 17 ≈ 24.5px` — do not set bar width in CSS
+- Bar width calculated dynamically from `VIZ_W / TRACKS.length` (with `VIZ_GAP` subtracted) — do not set bar width in CSS
+- **`VIZ_W` in `music.js` and `.mc-viz { max-width }` in `music.css` must always match.** Current value: `720px` (1.5x the original 480px, set Jun 2026). If one changes, change the other.
 - Idle animation: `startVizIdle()` nudges 3–4 random non-active bars every 200 ms
 
 **CSS (`music.css`) key facts:**

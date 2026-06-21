@@ -119,7 +119,7 @@ function bellH(abs) {
 }
 
 const VIZ_GAP  = 4;
-const VIZ_W    = 480;
+const VIZ_W    = 720;
 const barWidth = (VIZ_W - (TRACKS.length - 1) * VIZ_GAP) / TRACKS.length;
 
 const vizEl    = document.getElementById('mcViz');
