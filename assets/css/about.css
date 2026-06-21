@@ -2,33 +2,27 @@
 #about {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-areas:
+    "left photo"
+    "left skills";
   column-gap: 4rem;
   row-gap: 2rem;
   min-height: calc(100vh - 60px);
-  padding: 2rem 3rem;
+  padding: 5rem 3rem 3rem;
   align-content: center;
 }
-.about-left {
-  grid-column: 1;
-  grid-row: 1 / 3;
-  align-self: center;
-}
-.about-photo-wrap {
-  grid-column: 2;
-  grid-row: 1;
-}
-.about-skills-wrap {
-  grid-column: 2;
-  grid-row: 2;
-}
+.about-left       { grid-area: left;   align-self: center; }
+.about-photo-wrap { grid-area: photo; }
+.about-skills-wrap { grid-area: skills; }
+
 .about-heading {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   line-height: 1.1;
+  letter-spacing: -0.02em;
   margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 .about-text {
   font-size: 0.95rem;
@@ -70,14 +64,14 @@
 @media (max-width: 768px) {
   #about {
     grid-template-columns: 1fr;
-    grid-template-rows: unset;
+    grid-template-areas:
+      "photo"
+      "left"
+      "skills";
     min-height: unset;
-    padding: 3rem 1.25rem;
+    padding: 5rem 1.25rem 3rem;
     align-content: unset;
     gap: 2rem;
   }
-  .about-left    { grid-column: 1; grid-row: unset; align-self: unset; order: 2; }
-  .about-photo-wrap  { order: 1; }
-  .about-skills-wrap { order: 3; }
   .about-photo { margin-bottom: 0; }
 }
