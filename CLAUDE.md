@@ -174,7 +174,7 @@ All 6 cards link to `https://github.com/Yoyoma2000/MUSC320-projects` (same repo,
 ### Music
 Genres: Cinematic · EDM · Pop · Rock · Jazz · J-Pop · Phonk · Lofi · Ambient · Electronic  
 Instruments: Piano · Saxophone  
-All 17 tracks served via **SoundCloud private embeds** — no local audio files. Track IDs and secret tokens stored in `TRACKS` array in `assets/js/music.js`.
+All tracks (65 as of Jun 2026) served via **SoundCloud private embeds** — no local audio files. Track IDs and secret tokens stored in `TRACKS` array in `assets/js/music.js`.
 
 ### Achievements
 - UBC Biztech Hellohacks Hackathon — 2nd Place (Oct 2024)
@@ -188,10 +188,10 @@ All 17 tracks served via **SoundCloud private embeds** — no local audio files.
 2. **Multi-page with shared CSS** — `main.css` is shared; each page has its own `[pagename].css`. When adding a component, decide if it's shared (→ `main.css`) or page-specific (→ relevant `[pagename].css`). No inline `<style>` blocks.
 3. **No frameworks.** Do not introduce React, Vite, or any bundler without an explicit instruction.
 4. **GitHub Pages compatibility.** Everything must work as static files — no server-side code, no Node process.
-5. **Music files are SoundCloud embeds.** The `assets/music/` directory is empty. All 17 tracks are served via SoundCloud private embed iframes. Track data (id + secret token) lives in `music.js`. Never reference local audio files for the music page.
+5. **Music files are SoundCloud embeds.** The `assets/music/` directory is empty. All tracks (count = `TRACKS.length` in `music.js`, currently 65) are served via SoundCloud private embed iframes. Track data (id + secret token) lives in `music.js`. Never reference local audio files for the music page.
 6. **Reveal animation class is `.reveal`.** Add it to any new section heading or card. The IntersectionObserver in `main.js` toggles `.visible` when the element enters the viewport.
 7. **Waveform canvas (`#waveCanvas`) lives in `#hero` only.** Do not duplicate it.
-8. **Project cards** follow the `.project-card` structure exactly — `.project-type`, `.project-name`, `.project-desc`, `.project-stack` (with `<span>` tags), `.project-links`. For proprietary projects with no GitHub link, use `<p class="project-note">Proprietary codebase — developed during co-op term</p>` instead of `.project-links`.
+8. **Project cards** follow the `.project-card` structure exactly — `.project-type`, `.project-name`, `.project-desc`, `.project-stack` (with `<span>` tags), `.project-links`. For proprietary projects with no GitHub link, use `<p class="project-note">Proprietary codebase — developed during co-op term</p>` instead of `.project-links`. **`.project-link` text is always `↗ GitHub`** (arrow + space + label) — applies to both the CS & Engineering and Music Tech tabs.
 9. **Music page uses a horizontal U-arc carousel**, not a grid. Cards are `.mc-card` elements injected by `music.js` from the `TRACKS` array. The active card expands to show a lazy-loaded SoundCloud iframe. Do not add `.music-card` or `.page-hero` to `music.html`.
 10. **Tab system:** CS projects are in `#tab-cs`, music tech in `#tab-music-tech`. Adding a new tab requires updating both the `.projects-tabs` nav and adding a new `#tab-X` panel.
 11. **Nav indicator:** every `<nav>` has `<div class="nav-indicator"></div>` as the first child of `.nav-links`. Styles in `main.css`, logic in `main.js`. Do not remove it or inline-position it via CSS — JS sets `left`, `width`, and `opacity` at runtime.
@@ -251,18 +251,18 @@ All 17 tracks served via **SoundCloud private embeds** — no local audio files.
   <div class="mc-clip">            <!-- overflow: hidden, fixed height 420px -->
     <div class="mc-stage" id="mcStage">   <!-- cards injected by JS -->
   <div class="mc-footer">
-    <div class="mc-viz" id="mcViz">       <!-- 17 visualizer bars injected by JS -->
-    <div class="mc-counter">             <!-- X / 17 -->
+    <div class="mc-viz" id="mcViz">       <!-- TRACKS.length visualizer bars injected by JS (65 as of Jun 2026) -->
+    <div class="mc-counter">             <!-- X / TRACKS.length -->
 ```
 
 **JS (`music.js`) key facts:**
-- `TRACKS` array: 17 objects `{ title, genre, id, token }` — SoundCloud track IDs + secret tokens
-- All 17 tracks are **private SoundCloud links** requiring the `secret_token` query param in the embed URL
+- `TRACKS` array: objects `{ title, genre, id, token }` — SoundCloud track IDs + secret tokens. 65 entries as of Jun 2026; count drives bar count, counter, etc. automatically
+- All tracks are **private SoundCloud links** requiring the `secret_token` query param in the embed URL
 - U-arc positions defined in `STEPS` array — 5 entries for offsets 0–4+, with `x/y/scale/opacity`
 - Only the active card has a SoundCloud iframe in the DOM (lazy-injected on `goTo()`, removed on deactivate)
 - Scroll capture: `mouseenter`/`mouseleave` on the active card adds/removes a `{ passive: false }` wheel listener — no overlay div on the iframe
 - `isThrottled` flag (600 ms) prevents scroll accumulation
-- Visualizer: 17 bars, bell-curve height falloff from active index, drag-to-scrub via `mousedown`/`mousemove` on `.mc-viz`
+- Visualizer: bar count = `TRACKS.length`, bell-curve height falloff from active index, drag-to-scrub via `mousedown`/`mousemove` on `.mc-viz`
 - Bar width calculated dynamically from `VIZ_W / TRACKS.length` (with `VIZ_GAP` subtracted) — do not set bar width in CSS
 - **`VIZ_W` in `music.js` and `.mc-viz { max-width }` in `music.css` must always match.** Current value: `720px` (1.5x the original 480px, set Jun 2026). If one changes, change the other.
 - Idle animation: `startVizIdle()` nudges 3–4 random non-active bars every 200 ms
