@@ -6,12 +6,12 @@
     "left photo"
     "left skills";
   column-gap: 2.5rem;
-  row-gap: 2rem;
+  row-gap: 0.75rem;
   min-height: calc(100vh - 60px);
   padding: 5rem 3rem 1rem;
   align-content: center;
 }
-.about-left       { grid-area: left;   align-self: center; max-width: 480px; }
+.about-left       { grid-area: left;   align-self: center; }
 .about-photo-wrap { grid-area: photo; }
 .about-skills-wrap { grid-area: skills; }
 
