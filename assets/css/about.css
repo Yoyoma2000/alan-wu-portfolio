@@ -14,7 +14,7 @@ body:has(#about) main { display: flex; flex-direction: column; }
 }
 .about-left       { grid-area: left;   align-self: center; }
 .about-photo-wrap { grid-area: photo; }
-.about-skills-wrap { grid-area: skills; padding-left: calc((50% - 160px) * 0.6); }
+.about-skills-wrap { grid-area: skills; padding-left: calc((50% - 160px) * 0.5); }
 
 .about-heading {
   font-family: var(--font-display);
