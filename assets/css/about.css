@@ -1,5 +1,7 @@
 /* ── ABOUT ──────────────────────────────────────────── */
+body:has(#about) main { display: flex; flex-direction: column; }
 #about {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
@@ -7,7 +9,6 @@
     "left skills";
   column-gap: 2.5rem;
   row-gap: 0.75rem;
-  min-height: calc(100vh - 60px);
   padding: 5rem 3rem 1rem;
   align-content: center;
 }
