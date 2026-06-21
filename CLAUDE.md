@@ -1,7 +1,7 @@
 # CLAUDE.md — Alan Wu Personal Portfolio
 
 > **This file is the source of truth for Claude Code.**  
-> Read it fully before touching any file. It encodes every decision made during planning.
+> Read it fully before touching any file. It encodes every decision made during planning and all sessions since.
 
 ---
 
@@ -48,7 +48,7 @@ Current tuned values (Jun 2026) — do not arbitrarily change these:
 - Stroke `globalAlpha` inside draw loop: `0.85` (in `index.js`)
 
 ### Layout Rules
-- Sections: `padding: 7rem 3rem` desktop, `5rem 1.25rem` mobile
+- Sections: `padding: 7rem 3rem` desktop, `5rem 1.25rem` mobile (from `main.css`; override per-page with ID selectors)
 - Grid gaps: 1px with `background: var(--border)` (creates hairline grid lines)
 - Dividers: `<div class="divider">` — `1px` lines using `var(--border)`
 - No rounded corners anywhere except `.btn-primary` (none)
@@ -61,32 +61,34 @@ Current tuned values (Jun 2026) — do not arbitrarily change these:
 ```
 alan-wu-portfolio/
 ├── index.html              ← Pure landing page: full-viewport hero + 4-card teaser strip
-├── about.html              ← About section: bio, stats grid, skills grid
-├── experience.html         ← Experience section (full page)
-├── projects.html           ← Projects section with CS/Music Tech tabs (full page)
-├── music.html              ← Music section (full page)
-├── contact.html            ← Contact section (full page, vertically centered)
+├── about.html              ← About: two-column viewport layout (bio + photo/skills), NO .page-hero
+├── experience.html         ← Experience: vertical timeline with 3 entries
+├── projects.html           ← Projects: CS & Engineering + Music Tech tabs
+├── music.html              ← Music: horizontal U-arc carousel (no .page-hero)
+├── contact.html            ← Contact: vertically centered, email/GitHub/LinkedIn/Resume links
 ├── CLAUDE.md               ← you are here
 ├── README.md               ← GitHub Pages deployment guide
 ├── assets/
-│   ├── js/                 ← extracted scripts
+│   ├── js/
 │   │   ├── main.js         ← scroll reveal + active nav highlight + nav indicator + hamburger (shared)
-│   │   ├── index.js        ← waveform canvas animation
-│   │   ├── projects.js     ← tab switcher
-│   │   └── music.js        ← U-arc carousel, SoundCloud embeds, visualizer, drag scrub
-│   ├── css/                ← extracted stylesheets
-│   │   ├── main.css        ← tokens, reset, nav, footer, animations, .page-hero base (shared)
-│   │   ├── index.css       ← hero, waveform, glow orbs, buttons, teaser strip
-│   │   ├── about.css       ← about grid, stats, skills
-│   │   ├── experience.css  ← experience list + page-hero bg override
-│   │   ├── projects.css    ← tabs, project cards, tab panels
-│   │   ├── music.css       ← U-arc carousel layout, mc-* components, visualizer, flex-fill section
-│   │   └── contact.css     ← contact section (centered layout, watermark)
-│   ├── music/              ← .mp3 / .mp4 files go here
-│   │   └── README.md       ← format: slug.mp3, metadata in music-data.js
-│   ├── images/             ← project screenshots, profile photo
-│   │   └── README.md
-│   └── projects/           ← any downloadable project files
+│   │   ├── index.js        ← waveform canvas animation + hero staggered reveal
+│   │   ├── projects.js     ← tab switcher (CS ↔ Music Tech)
+│   │   ├── music.js        ← U-arc carousel, SoundCloud embeds, visualizer, drag scrub
+│   │   ├── experience.js   ← any experience-page-specific JS
+│   │   └── contact.js      ← email copy-to-clipboard button logic
+│   ├── css/
+│   │   ├── main.css        ← tokens, reset, nav, footer, animations, .page-hero, .reveal (shared)
+│   │   ├── index.css       ← hero, waveform canvas, glow orbs, buttons, teaser strip
+│   │   ├── about.css       ← two-column about layout, photo, skills grid
+│   │   ├── experience.css  ← timeline layout, tl-entry, tl-card, tl-node
+│   │   ├── projects.css    ← tabs, .project-card, .project-note, tab panels
+│   │   ├── music.css       ← U-arc carousel, mc-* components, visualizer bars
+│   │   └── contact.css     ← contact section centered layout
+│   ├── images/
+│   │   └── profile.jpg     ← profile photo (aspect-ratio 3/4, referenced in about.html)
+│   ├── documents/
+│   │   └── resume.pdf      ← resume download (linked from contact.html)
+│   └── music/              ← (empty — all music served via SoundCloud embeds, not local files)
 ├── .claude/
 │   ├── settings.json       ← hook configuration
 │   ├── skills/
@@ -102,17 +104,17 @@ alan-wu-portfolio/
 ```
 
 **Multi-page notes:**
-- Styles live in `assets/css/` — `main.css` is shared by all pages; each page also links its own `[pagename].css`. No inline `<style>` blocks.
+- Styles live in `assets/css/` — `main.css` is shared by all pages; each page links its own `[pagename].css`. No inline `<style>` blocks.
 - Nav logo (`AW.DEV`) links to `index.html` on all pages.
 - **Active nav link** is highlighted in `var(--text)` (bright white) via JS in `main.js`. On `index.html` the logo itself is treated as the active element. Non-active links stay `var(--muted)`.
-- **Nav sliding indicator:** all 6 pages have `<div class="nav-indicator"></div>` as the first child of `.nav-links`. On page load, `main.js` positions it over the active link using `getBoundingClientRect()` (works even for the logo, which sits outside `.nav-links`). Cross-page slide animation: before navigating, the current indicator position is saved to `sessionStorage`; on the new page it snaps to the saved position then slides to the current link via a double-`requestAnimationFrame` + CSS `transition`. **Positioning is split into two cases:** (1) Fresh page load (no `navPrevLeft` in sessionStorage) — uses `document.fonts.ready.then(positionIndicator)` so font metrics are stable before measuring; safe here because no animation is in flight. (2) Cross-page navigation (`navPrevLeft` present) — uses double-rAF; fonts are already cached so measurement is correct, and `fonts.ready` would race with the snap-then-slide animation. Do NOT collapse these into a single path. A `resize` listener also calls `positionIndicator()` (after clearing `transition`) to correct the pill when the window moves between monitors with different DPI scaling.
+- **Nav sliding indicator:** all 6 pages have `<div class="nav-indicator"></div>` as the first child of `.nav-links`. On page load, `main.js` positions it over the active link using `getBoundingClientRect()`. Cross-page slide animation: before navigating, the current indicator position is saved to `sessionStorage`; on the new page it snaps to the saved position then slides to the current link via a double-`requestAnimationFrame` + CSS `transition`. **Positioning is split into two cases:** (1) Fresh page load (no `navPrevLeft` in sessionStorage) — uses `document.fonts.ready.then(positionIndicator)` so font metrics are stable before measuring; safe here because no animation is in flight. (2) Cross-page navigation (`navPrevLeft` present) — uses double-rAF; fonts are already cached so measurement is correct, and `fonts.ready` would race with the snap-then-slide animation. Do NOT collapse these into a single path. A `resize` listener also calls `positionIndicator()` (after clearing `transition`) to correct the pill when the window moves between monitors with different DPI scaling.
 - **Mobile nav:** all 6 pages have a `.nav-hamburger` button inside `<nav>`. `main.js` builds a `.nav-mobile-overlay` div appended to `<body>` (not inside `<nav>`) to avoid the `backdrop-filter` containing-block issue, clones the nav links into it, and toggles it on hamburger click. Overlay is `position: fixed; inset: 0; z-index: 99` with `background: var(--bg)`.
 - `index.html` is a pure landing page: full-viewport hero + a single teaser strip (4 `.teaser-card` elements linking to each inner page). No full content sections.
-- Inner pages (`about.html`, `experience.html`, `projects.html`, `contact.html`) each have a `.page-hero` div at top (section label + heading). `music.html` does NOT use `.page-hero` — it has its own `.mc-header` integrated into the carousel layout.
+- **Pages with `.page-hero`:** `experience.html`, `projects.html`, `contact.html`. Each has a `.page-hero` div at the top (section label + `.section-title` heading). `about.html` and `music.html` do NOT use `.page-hero` — they have their own custom header layouts.
 - **Sticky footer:** all pages use `body { display: flex; flex-direction: column; min-height: 100vh; }` and `<main>` with `flex: 1` to push the footer to the bottom of the viewport.
-- **music.html layout exception:** `music.css` adds `body:has(#music) main { display: flex; flex-direction: column }` and `#music { flex: 1 }` so the section fills `<main>` exactly with no gap above the footer. Do not add `min-height` to `#music` — the flex fill handles it.
-- **Hero animation:** `.hero-eyebrow`, `.hero-name`, `.hero-tagline`, `.hero-cta`, `.scroll-hint` start at `opacity: 0; transform: translateY(20px)` with a CSS `transition`. `index.js` triggers each via `setTimeout` at staggered delays (300–1400 ms). Do NOT use CSS `@keyframes` or `animation:` for these — the JS setTimeout approach is intentional (CSS animation fill-mode proved unreliable on GitHub Pages / Windows with reduce-motion OS settings).
-- **prefers-reduced-motion:** `main.css` has a `@media (prefers-reduced-motion: reduce)` block that sets `transition: none !important` globally and forces `opacity: 1` on both `.reveal` and all hero elements as a CSS fallback. `index.js` also checks `window.matchMedia` and skips timeouts to reveal hero elements immediately.
+- **Flex-fill pattern for single-section pages:** when a page has one section that should fill the full viewport height (no scrollbar), use `body:has(#sectionId) main { display: flex; flex-direction: column; }` + `#sectionId { flex: 1; align-content: center; }` in the page-specific CSS. Do NOT use `min-height: calc(100vh - Xpx)` — it cannot account for footer height and always causes a scrollbar. Currently used by `about.html` and `music.html`.
+- **Hero animation:** `.hero-eyebrow`, `.hero-name`, `.hero-tagline`, `.hero-cta`, `.scroll-hint` start at `opacity: 0; transform: translateY(20px)` via CSS. `index.js` triggers each via `setTimeout` + **direct style assignment** (`el.style.opacity = '1'; el.style.transform = 'translateY(0)'`) at staggered delays (300–1400 ms). Do NOT use CSS `@keyframes animation:` — fill-mode is unreliable on GitHub Pages / Windows with reduce-motion OS settings.
+- **prefers-reduced-motion:** `main.css` has a `@media (prefers-reduced-motion: reduce)` block that sets `transition: none !important` globally and forces `opacity: 1` on both `.reveal` and all hero elements. `index.js` also checks `window.matchMedia` and skips timeouts to reveal hero elements immediately.
 
 ---
 
@@ -127,27 +129,52 @@ alan-wu-portfolio/
 
 ### Experience (newest first)
 1. **Surrey Food Bank** — Full Stack Developer, Jan–Apr 2026
-   - React.js, Django, PostgreSQL, Tailwind CSS
-   - Built appointment booking system + Tiny Bundles feature end-to-end
+   - React.js, Django, PostgreSQL, Tailwind CSS, JIRA
+   - Appointment booking system with automated timeslot generation; Tiny Bundles feature end-to-end
 
 2. **ZenNyxAI Inc.** — Web Feature Engineer, May–Sep 2025
    - React.js, React-Konva, Marked.js, jsPDF, KaTeX, OpenAI
-   - Core MindMap feature for EasyNoteAI (Markdown → interactive node graphs)
+   - Core MindMap feature for EasyNoteAI (Markdown → interactive node graphs, multi-format export)
 
-### Projects
+3. **University of British Columbia** — BSc Computer Science, Sep 2023–Present
+   - GPA 4.30/4.33, Dean's List (2023–2026), graduating May 2028
+
+### Projects — CS & Engineering Tab (`#tab-cs`)
+
 | Name | Type | Year | Stack | GitHub |
 |------|------|------|-------|--------|
-| 39WithYou | Personal | 2025 | TS, React, Three.js, Claude API, TTS | TBD |
-| VoiceBase | Hackathon 🏆2nd | 2024 | React, Spring Boot, Node | TBD |
-| FiscordProject | Personal | 2024 | TS, Next.js, Firebase | TBD |
-| WhereToEat? | Academic | 2024 | Java, Swing, JUnit | TBD |
-| Tennis Rank Predictor | Academic | 2024 | R, tidyverse | TBD |
+| Surrey Food Bank | Co-op | Jan–Apr 2026 | React.js, Django, PostgreSQL, Tailwind, JIRA | Proprietary |
+| SwipeToBuy | Personal | 2026 | React.js, Node.js, Tailwind CSS | github.com/Yoyoma2000/SwipeToBuy |
+| Workday UBC Chrome Extension | Personal | 2026 | JavaScript, Chrome Extensions API | github.com/Yoyoma2000/WorkdayUBC-Extension-RemoveLocationCode |
+| ZenNyxAI | Co-op | May–Sep 2025 | React.js, React-Konva, Marked.js, jsPDF, KaTeX, OpenAI | Proprietary |
+| 39WithYou | Personal | 2025 | TS, React, Three.js, Claude API, TTS Models | github.com/Yoyoma2000/39WithYou |
+| VoiceBase | Hackathon 🏆2nd | Oct 2024 | React.js, Spring Boot, Node.js, jszip | github.com/Yoyoma2000/Voicebank-Maker |
+| FiscordProject | Personal | 2024 | TS, Next.js, Firebase, Tailwind | github.com/Yoyoma2000/fiscordprojectalan |
+| WhereToEat? | Academic | 2024 | Java, Swing, JUnit, JSON | github.com/Yoyoma2000/WhereToEat |
+| Tennis Rank Predictor | Academic | 2024 | R, tidyverse, tidyModels, GGAlly | github.com/Yoyoma2000/DSCI100-Group10-Project |
+| CharityDatabase | Academic | 2024 | SQL, database schema design | github.com/Yoyoma2000/CharityDatabase |
+| Made-In-Abyss: Journey Into the Unknown | Personal | 2023 | GML, GameMaker Studio | github.com/Yoyoma2000/Made-In-Abyss---Journey-Into-the-Unknown |
+| Gun Game Simulator | Personal | 2022 | Java, JSON | github.com/Yoyoma2000/Gun-Game-Simulator |
+
+**Proprietary co-op projects** (Surrey Food Bank, ZenNyxAI) use `<p class="project-note">Proprietary codebase — developed during co-op term</p>` instead of a `.project-links` div. `.project-note` is defined in `projects.css`.
+
+### Projects — Music Tech Tab (`#tab-music-tech`)
+
+All 6 cards link to `https://github.com/Yoyoma2000/MUSC320-projects` (same repo, different projects within it).
+
+| Name | Type | Stack |
+|------|------|-------|
+| DJ Mixing Station | Personal · 2025 · Final Project | Max/MSP, Max 9, DSP, Audio Routing |
+| FM Synthesizer | Academic · 2025 | Max/MSP, FM Synthesis, MIDI, DSP |
+| Sampler | Academic · 2025 | Max/MSP, Audio Sampling, DSP |
+| MIDI Keyboard + Sequencer | Academic · 2025 | Max/MSP, MIDI, Sequencing |
+| Retro Game Music Generator | Academic · 2025 | Max/MSP, Procedural Generation, MIDI |
+| Currency Converter | Academic · 2025 | Max/MSP |
 
 ### Music
-Genres: Cinematic · EDM · Pop · Rock  
+Genres: Cinematic · EDM · Pop · Rock · Jazz · J-Pop · Phonk · Lofi · Ambient · Electronic  
 Instruments: Piano · Saxophone  
-Files: MP3 / MP4 in `/assets/music/`  
-> **To add a track:** follow `.claude/skills/add-music-track.md`
+All 17 tracks served via **SoundCloud private embeds** — no local audio files. Track IDs and secret tokens stored in `TRACKS` array in `assets/js/music.js`.
 
 ### Achievements
 - UBC Biztech Hellohacks Hackathon — 2nd Place (Oct 2024)
@@ -158,22 +185,63 @@ Files: MP3 / MP4 in `/assets/music/`
 ## Critical Rules for Claude Code
 
 1. **Never change design tokens.** Colors, fonts, and spacing are locked.
-2. **Multi-page with shared CSS** — the site is split across 6 HTML files. Styles live in `assets/css/`: `main.css` is shared by all pages; each page also links its own `[pagename].css` for unique styles. When adding a new component, decide if it's shared (→ `main.css`) or page-specific (→ the relevant `[pagename].css`). Do not add inline `<style>` blocks.
-3. **No frameworks.** Do not introduce React, Vite, or any bundler without an explicit instruction to do so.
+2. **Multi-page with shared CSS** — `main.css` is shared; each page has its own `[pagename].css`. When adding a component, decide if it's shared (→ `main.css`) or page-specific (→ relevant `[pagename].css`). No inline `<style>` blocks.
+3. **No frameworks.** Do not introduce React, Vite, or any bundler without an explicit instruction.
 4. **GitHub Pages compatibility.** Everything must work as static files — no server-side code, no Node process.
-5. **Music files are local assets.** Reference them as `./assets/music/filename.mp3` — never embed external streaming URLs without asking.
-6. **Reveal animation class is `.reveal`.** Add it to any new section heading or card. The IntersectionObserver in `main.js` toggles `.visible` (which sets `opacity: 1; transform: none` via CSS) when the element enters the viewport.
+5. **Music files are SoundCloud embeds.** The `assets/music/` directory is empty. All 17 tracks are served via SoundCloud private embed iframes. Track data (id + secret token) lives in `music.js`. Never reference local audio files for the music page.
+6. **Reveal animation class is `.reveal`.** Add it to any new section heading or card. The IntersectionObserver in `main.js` toggles `.visible` when the element enters the viewport.
 7. **Waveform canvas (`#waveCanvas`) lives in `#hero` only.** Do not duplicate it.
-8. **Project cards** follow the `.project-card` structure exactly — type, name, desc, stack tags, links.
-9. **Music page uses a horizontal U-arc carousel**, not a grid. Cards are `.mc-card` elements injected by `music.js` from the `TRACKS` array (17 SoundCloud tracks). The active card expands to show a lazy-loaded SoundCloud iframe. Do not add `.music-card` or `.page-hero` to `music.html` — the old grid structure no longer exists.
+8. **Project cards** follow the `.project-card` structure exactly — `.project-type`, `.project-name`, `.project-desc`, `.project-stack` (with `<span>` tags), `.project-links`. For proprietary projects with no GitHub link, use `<p class="project-note">Proprietary codebase — developed during co-op term</p>` instead of `.project-links`.
+9. **Music page uses a horizontal U-arc carousel**, not a grid. Cards are `.mc-card` elements injected by `music.js` from the `TRACKS` array. The active card expands to show a lazy-loaded SoundCloud iframe. Do not add `.music-card` or `.page-hero` to `music.html`.
 10. **Tab system:** CS projects are in `#tab-cs`, music tech in `#tab-music-tech`. Adding a new tab requires updating both the `.projects-tabs` nav and adding a new `#tab-X` panel.
-11. **Nav indicator:** every `<nav>` has `<div class="nav-indicator"></div>` as the first child of `.nav-links`. Styles are in `main.css`. Logic is in `main.js`. Do not remove it or inline-position it via CSS — JS sets `left`, `width`, and `opacity` at runtime.
+11. **Nav indicator:** every `<nav>` has `<div class="nav-indicator"></div>` as the first child of `.nav-links`. Styles in `main.css`, logic in `main.js`. Do not remove it or inline-position it via CSS — JS sets `left`, `width`, and `opacity` at runtime.
+12. **Hero text visibility:** `index.js` reveals hero elements via `setTimeout` + **direct style assignment** (`el.style.opacity = '1'; el.style.transform = 'translateY(0)'`). Never use CSS `@keyframes` with `animation-fill-mode: forwards` for hero elements — it is unreliable on GitHub Pages / Windows and leaves elements invisible after animation completes.
+13. **Nav indicator positioning — two-path rule:** Fresh load → `document.fonts.ready.then(positionIndicator)`. Cross-page navigation (sessionStorage has `navPrevLeft`) → double-`requestAnimationFrame`. Do NOT collapse into one path — `fonts.ready` races with the snap-then-slide animation when fonts are already cached.
+14. **Single-viewport pages — use flex fill, not min-height:** `body:has(#sectionId) main { display: flex; flex-direction: column; }` + `#sectionId { flex: 1; }`. `min-height: calc(100vh - Npx)` always causes a scrollbar because it cannot account for the footer height at compile time.
+15. **GitHub Pages CDN caching:** always hard-refresh (`Ctrl+Shift+R`) before concluding a deployed fix didn't work. GitHub Pages CDN can serve stale assets for several minutes.
+16. **Python hooks on Windows:** the hook runner uses `py` (not `python3`) on Windows. If hooks fail with "command not found", check that `py` is on PATH.
+17. **about.html has no `.page-hero`.** The "About" section label and "Two worlds, one toolkit." heading live inside `.about-left` within `#about`, using `.about-heading` (not `.section-title`). Do not add a `.page-hero` div to about.html.
+18. **experience.html loads `experience.js`** and **contact.html loads `contact.js`** — both files exist in `assets/js/`. Do not remove these script tags.
+
+---
+
+## About Page Architecture
+
+`about.html` was fully redesigned (Jun 2026) into a single-viewport two-column layout — no `.page-hero`, no stats grid, no Music skill group.
+
+**HTML structure:**
+```html
+<section id="about">
+  <div class="about-left">        <!-- col 1, spans both grid rows -->
+    <p class="section-label reveal">About</p>
+    <h1 class="about-heading reveal">Two worlds, one toolkit.</h1>
+    <p class="about-text reveal">...</p>
+    <p class="about-text reveal" style="margin-top:1rem;">...</p>
+  </div>
+  <div class="about-photo-wrap reveal">   <!-- col 2, row 1 -->
+    <img src="assets/images/profile.jpg" alt="Alan Wu" class="about-photo">
+  </div>
+  <div class="about-skills-wrap">         <!-- col 2, row 2 -->
+    <p class="section-label reveal">Skills</p>
+    <div class="skills-grid reveal">...</div>
+  </div>
+</section>
+```
+
+**CSS (`about.css`) key facts:**
+- `body:has(#about) main { display: flex; flex-direction: column; }` + `#about { flex: 1; }` fills the viewport without a scrollbar
+- `grid-template-areas: "left photo" / "left skills"` — explicit named areas; do not revert to numeric `grid-column`/`grid-row` placement (it was unreliable)
+- `.about-heading`: `clamp(2.5rem, 5vw, 4rem)`, matches `.section-title` size
+- `.about-photo`: `max-width: 320px; aspect-ratio: 3/4; object-fit: cover; object-position: center top; margin: 1rem auto`
+- `.about-skills-wrap`: `padding-left: calc((50% - 160px) * 0.6)` nudges the skills block rightward to roughly align with the photo center
+- Skills: only **Languages**, **Frameworks**, **Tools & AI** — Music skill group was removed
+- Mobile (`≤768px`): `grid-template-areas: "photo" / "left" / "skills"` — stacks photo → bio → skills
 
 ---
 
 ## Music Page Architecture
 
-`music.html` was fully redesigned (Jun 2026) into a horizontal U-arc carousel — no grid, no `.page-hero`.
+`music.html` was redesigned (Jun 2026) into a horizontal U-arc carousel — no grid, no `.page-hero`.
 
 **HTML structure:**
 ```html
@@ -187,41 +255,63 @@ Files: MP3 / MP4 in `/assets/music/`
 ```
 
 **JS (`music.js`) key facts:**
-- `TRACKS` array: 17 objects with `{ title, genre, id, token }` (SoundCloud track IDs + secret tokens)
+- `TRACKS` array: 17 objects `{ title, genre, id, token }` — SoundCloud track IDs + secret tokens
+- All 17 tracks are **private SoundCloud links** requiring the `secret_token` query param in the embed URL
 - U-arc positions defined in `STEPS` array — 5 entries for offsets 0–4+, with `x/y/scale/opacity`
 - Only the active card has a SoundCloud iframe in the DOM (lazy-injected on `goTo()`, removed on deactivate)
 - Scroll capture: `mouseenter`/`mouseleave` on the active card adds/removes a `{ passive: false }` wheel listener — no overlay div on the iframe
 - `isThrottled` flag (600 ms) prevents scroll accumulation
 - Visualizer: 17 bars, bell-curve height falloff from active index, drag-to-scrub via `mousedown`/`mousemove` on `.mc-viz`
-- Bar width is calculated dynamically: `(480 - 16 * 4) / 17 ≈ 24.5px` — do not set bar width in CSS
+- Bar width calculated dynamically: `(480 - 16 * 4) / 17 ≈ 24.5px` — do not set bar width in CSS
 - Idle animation: `startVizIdle()` nudges 3–4 random non-active bars every 200 ms
 
-**To add a track:** append an entry to the `TRACKS` array in `music.js` and update `.mc-total` if hardcoded.
+**CSS (`music.css`) key facts:**
+- `body:has(#music) main { display: flex; flex-direction: column; }` + `#music { flex: 1; }` fills viewport
+- Do not add `min-height` to `#music` — the flex fill handles it
+
+**To add a track:** append an entry to `TRACKS` in `music.js` and confirm `.mc-total` matches `TRACKS.length` (it is set dynamically via JS, so no HTML change needed).
+
+---
+
+## Experience Page Architecture
+
+`experience.html` uses a **vertical alternating timeline** — entries alternate left/right of a center gradient line.
+
+**Structure:** `.timeline` > `.tl-entry.tl-left` or `.tl-entry.tl-right` > `[.tl-date] [.tl-node] [.tl-card]`
+
+- Node dot: `.tl-node` (cyan glow) or `.tl-node--academic` (violet glow)
+- Card top-border gradient animates in on hover (same pattern as `.project-card`)
+- Mobile: collapses to `[node] [card]` layout with date shown inside card via `.card-date`
+- Currently 3 entries: UBC (academic, left), ZenNyxAI (right), Surrey Food Bank (left)
 
 ---
 
 ## How to Add Things (quick reference)
 
 ### Add a CS project
-→ See `.claude/skills/add-cs-project.md`
+→ See `.claude/skills/add-cs-project.md`  
+Order: newest first. Co-op projects without public repos → use `<p class="project-note">Proprietary codebase — developed during co-op term</p>` instead of `.project-links`.
 
 ### Add a music track
-→ See `.claude/skills/add-music-track.md`
+→ See `.claude/skills/add-music-track.md`  
+Append to `TRACKS` array in `music.js` — HTML does not need to change.
 
 ### Add a work experience entry
-→ See `.claude/skills/add-experience.md`
+→ See `.claude/skills/add-experience.md`  
+Add a `.tl-entry` to the timeline in `experience.html`; update the experience table in this CLAUDE.md.
 
 ### Update GitHub links on projects
-Find the project card by name, update `href="#"` on `.project-link` to the real GitHub URL.
+Find the card by `.project-name`, update `href` on `.project-link`, ensure `target="_blank" rel="noopener"`, remove `project-link-placeholder` class.
 
 ---
 
 ## GitHub Pages Deployment
 
 Push to `main` branch → GitHub Pages auto-deploys via `.github/workflows/deploy.yml`.  
-Live at: `https://[your-github-username].github.io/alan-wu-portfolio/`
+Live at: `https://Yoyoma2000.github.io/alan-wu-portfolio/`
 
-> First deploy: Go to repo Settings → Pages → Source: GitHub Actions
+> First deploy: Go to repo Settings → Pages → Source: GitHub Actions  
+> **CDN cache:** always `Ctrl+Shift+R` (hard refresh) before assuming a pushed fix didn't take effect.
 
 ---
 
@@ -234,6 +324,7 @@ This project is intentionally structured to practice the full Claude Code harnes
 - **Hooks** (`.claude/hooks/`): self-improving automation
   - `session_start.py` runs at session start to load context
   - `propose_claude_md.py` runs as stop hook to suggest CLAUDE.md updates
+  - On Windows, hooks must invoke `py` not `python3`
 - **Subagents**: use for scoped tasks like "scan all project cards and check GitHub links"
 - **MCP (GitHub)**: can be wired up to auto-create issues for TODO items in code
 
