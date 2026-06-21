@@ -5,13 +5,13 @@
   grid-template-areas:
     "left photo"
     "left skills";
-  column-gap: 4rem;
+  column-gap: 2.5rem;
   row-gap: 2rem;
   min-height: calc(100vh - 60px);
-  padding: 5rem 3rem 3rem;
+  padding: 5rem 3rem 1rem;
   align-content: center;
 }
-.about-left       { grid-area: left;   align-self: center; }
+.about-left       { grid-area: left;   align-self: center; max-width: 480px; }
 .about-photo-wrap { grid-area: photo; }
 .about-skills-wrap { grid-area: skills; }
 
@@ -27,7 +27,7 @@
 .about-text {
   font-size: 0.95rem;
   color: var(--muted);
-  line-height: 1.8;
+  line-height: 1.9;
 }
 .about-text strong { color: var(--text); }
 .about-photo {
@@ -37,16 +37,16 @@
   object-fit: cover;
   object-position: center top;
   display: block;
-  margin: 0 auto 2rem;
+  margin: 2rem auto 2rem;
 }
-.skills-grid { display: flex; flex-direction: column; gap: 1rem; }
+.skills-grid { display: flex; flex-direction: column; gap: 0.75rem; }
 .skill-group-label {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   color: var(--violet);
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .skill-tag {
