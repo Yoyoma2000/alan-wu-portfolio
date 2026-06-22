@@ -8,12 +8,41 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ── Screenshot preview toggle ────────────────────────
-document.querySelectorAll('.project-preview-btn').forEach(btn => {
+// ── Screenshot lightbox ───────────────────────────────
+const lightboxOverlay = document.getElementById('lightboxOverlay');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxSoon = document.getElementById('lightboxSoon');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(src, alt) {
+  lightboxSoon.hidden = true;
+  lightboxImg.hidden = false;
+  lightboxImg.onerror = () => {
+    lightboxImg.hidden = true;
+    lightboxSoon.hidden = false;
+  };
+  lightboxImg.src = src;
+  lightboxImg.alt = alt;
+  lightboxOverlay.hidden = false;
+}
+
+function closeLightbox() {
+  lightboxOverlay.hidden = true;
+}
+
+document.querySelectorAll('.project-img-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const img = btn.nextElementSibling;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    img.hidden = expanded;
+    const name = btn.closest('.project-card').querySelector('.project-name').textContent;
+    openLightbox(btn.dataset.src, name + ' screenshot');
   });
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+
+lightboxOverlay.addEventListener('click', (e) => {
+  if (e.target === lightboxOverlay) closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !lightboxOverlay.hidden) closeLightbox();
 });
