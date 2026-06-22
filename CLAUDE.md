@@ -148,6 +148,7 @@ alan-wu-portfolio/
 | Workday UBC Chrome Extension | Personal | 2026 | JavaScript, Chrome Extensions API | github.com/Yoyoma2000/WorkdayUBC-Extension-RemoveLocationCode |
 | ZenNyxAI | Co-op | May–Sep 2025 | React.js, React-Konva, Marked.js, jsPDF, KaTeX, OpenAI | Proprietary |
 | 39WithYou | Personal | 2025 | TS, React, Three.js, Claude API, TTS Models | github.com/Yoyoma2000/39WithYou |
+| EasyCheck | Personal | 2026 | TypeScript, Next.js, GitHub App SDK, DeepSeek V3, Octokit, Webhooks | github.com/Yoyoma2000/EasyCheck |
 | VoiceBase | Hackathon 🏆2nd | Oct 2024 | React.js, Spring Boot, Node.js, jszip | github.com/Yoyoma2000/Voicebank-Maker |
 | FiscordProject | Personal | 2024 | TS, Next.js, Firebase, Tailwind | github.com/Yoyoma2000/fiscordprojectalan |
 | WhereToEat? | Academic | 2024 | Java, Swing, JUnit, JSON | github.com/Yoyoma2000/WhereToEat |
