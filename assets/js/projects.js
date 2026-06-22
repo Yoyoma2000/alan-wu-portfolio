@@ -7,3 +7,13 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
 });
+
+// ── Screenshot preview toggle ────────────────────────
+document.querySelectorAll('.project-preview-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const img = btn.nextElementSibling;
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    img.hidden = expanded;
+  });
+});
