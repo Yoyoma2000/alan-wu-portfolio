@@ -74,9 +74,10 @@
   color: var(--muted);
   background: transparent;
   border: none;
-  padding: 0;
+  padding: 0.35rem;
   cursor: pointer;
   opacity: 0.4;
+  display: flex;
   transition: opacity 0.2s, color 0.2s;
 }
 .project-card:hover .project-img-btn { opacity: 1; color: var(--cyan); }
