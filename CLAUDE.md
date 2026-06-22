@@ -96,8 +96,8 @@ alan-wu-portfolio/
 │   │   ├── add-music-track.md
 │   │   └── add-experience.md
 │   └── hooks/
-│       ├── propose_claude_md.py    ← stop hook: reflects + proposes updates
-│       └── session_start.py        ← start hook: loads context summary
+│       ├── propose_claude_md.py    ← Stop hook: reflects + proposes updates (only active hook)
+│       └── session_start.py        ← present but inactive — not wired up in settings.json
 └── .github/
     └── workflows/
         └── deploy.yml      ← GitHub Pages auto-deploy on push to main
@@ -325,8 +325,8 @@ This project is intentionally structured to practice the full Claude Code harnes
 - **CLAUDE.md** (this file): global rules, design tokens, content inventory
 - **Skills** (`.claude/skills/`): repeatable workflows for adding content
 - **Hooks** (`.claude/hooks/`): self-improving automation
-  - `session_start.py` runs at session start to load context
-  - `propose_claude_md.py` runs as stop hook to suggest CLAUDE.md updates
+  - `propose_claude_md.py` runs as the **Stop** hook to suggest CLAUDE.md updates — this is the only hook currently wired up in `.claude/settings.json`
+  - `session_start.py` still exists in `.claude/hooks/` but is **not** referenced in `settings.json` (no `SessionStart`/`PreToolUse` entry) — it is inactive
   - On Windows, hooks must invoke `py` not `python3`
 - **Subagents**: use for scoped tasks like "scan all project cards and check GitHub links"
 - **MCP (GitHub)**: can be wired up to auto-create issues for TODO items in code
