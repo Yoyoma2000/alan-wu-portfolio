@@ -24,10 +24,21 @@ function openLightbox(src, alt) {
   lightboxImg.src = src;
   lightboxImg.alt = alt;
   lightboxOverlay.hidden = false;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => lightboxOverlay.classList.add('is-open'));
+  });
 }
 
 function closeLightbox() {
-  lightboxOverlay.hidden = true;
+  lightboxOverlay.classList.remove('is-open');
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    lightboxOverlay.hidden = true;
+  };
+  lightboxOverlay.addEventListener('transitionend', finish, { once: true });
+  setTimeout(finish, 400);
 }
 
 document.querySelectorAll('.project-img-btn').forEach(btn => {
