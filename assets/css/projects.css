@@ -45,13 +45,19 @@
 }
 .project-card:hover { background: var(--surface); }
 .project-card:hover::before { opacity: 1; }
+.project-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
 .project-type {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--violet);
-  margin-bottom: 0.75rem;
 }
 .project-name {
   font-family: var(--font-display);
@@ -68,9 +74,7 @@
   margin-bottom: 1.5rem;
 }
 .project-img-btn {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  flex-shrink: 0;
   color: var(--muted);
   background: transparent;
   border: none;
@@ -78,6 +82,7 @@
   cursor: pointer;
   opacity: 0.4;
   display: flex;
+  align-items: center;
   transition: opacity 0.2s, color 0.2s;
 }
 .project-card:hover .project-img-btn { opacity: 1; color: var(--cyan); }
